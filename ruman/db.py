@@ -116,7 +116,8 @@ def manipulateWarningText():   #列出预警文本
 	cur.execute(sql)
 	results = cur.fetchall()
 	result = []
-	resultother = []
+	result1 = []
+	result0 = []
 	for i in results:   #选取所有文本并展示
 		dic = {}
 		dic['stock_name'] = i[DAY_STOCK_NAME]
@@ -148,13 +149,17 @@ def manipulateWarningText():   #列出预警文本
 		else:
 			dic['ifpunish'] = '否'
 		dic['id'] = i[DAY_ID]
-		if i['ifshow'] == 1:
+		if i['ifshow'] == 2:
 			result.append(dic)
+		elif i['ifshow'] == 1:
+			result1.append(dic)
 		else:
-			resultother.append(dic)
+			result0.append(dic)
 	result = sorted(result, key= lambda x:(x['end_date'], x['start_date'], x['increase_ratio']), reverse=True)   #按照特定顺序排序
-	resultother = sorted(resultother, key= lambda x:(x['end_date'], x['start_date'], x['increase_ratio']), reverse=True)
-	result.extend(resultother)
+	result1 = sorted(result1, key= lambda x:(x['end_date'], x['start_date'], x['increase_ratio']), reverse=True)
+	result0 = sorted(result0, key= lambda x:(x['end_date'], x['start_date'], x['increase_ratio']), reverse=True)
+	result.extend(result1)
+	result.extend(result0)
 	return result
 
 def manipulateWarningUser(id,ifmanipulate):
@@ -513,17 +518,17 @@ def manipulatePrice(id):   #获取本次操作期间的股价和收益率
 		industryprice = []
 		price = []
 		for time in timelist:
-			industryprice.append(dfother[dfother[WEIPAN_SHOW_TIME] == time].iloc[0][WEIPAN_SHOW_PRICE])
+			#industryprice.append(dfother[dfother[WEIPAN_SHOW_TIME] == time].iloc[0][WEIPAN_SHOW_PRICE])
 			price.append(dfself[dfself[WEIPAN_SHOW_TIME] == time].iloc[0][WEIPAN_SHOW_PRICE])
 		industry_ratio = []
 		ratio = []
 		D_value = []
 		for num in range(1,len(price)):
-			a = (industryprice[-1] - industryprice[num]) / industryprice[num]   #同行业收益率
+			#a = (industryprice[-1] - industryprice[num]) / industryprice[num]   #同行业收益率
 			b = (end_price - price[num]) / price[num]   #本股票收益率
-			industry_ratio.append(a)
+			#industry_ratio.append(a)
 			ratio.append(b)
-			D_value.append(b - a)   #差值绝对值
+			#D_value.append(b - a)   #差值绝对值
 		result = {'date':[i.split()[1] for i in timelist][1:],'industry_price':industryprice[1:],'price':price[1:],'industry_ratio':industry_ratio,'ratio':ratio,'D_value':D_value}
 		return result
 

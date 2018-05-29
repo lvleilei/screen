@@ -2521,10 +2521,8 @@
         var propagate_url = '/rumor/get_source/?en_name='+en_name;
         // var propagate_url = '/rumor/rumorPropagate?en_name=te-lang-pu-ji-xin-ge-1492166854';//测试的 【只有 它 有数据】
 
-        // var propagate_url = '/newHotSpot/hotspotReport/yy_propagate/?mid='+mid;//多渠道 版
-
         public_ajax.call_request('get',propagate_url,propagate);
-        // public_ajax.call_request('get',propagate_url,initData);//多渠道 版
+
         function propagate(data){
             $(".fishBone").empty().append('<center>加载中...</center>');
             if(data.length == 0){
@@ -2554,6 +2552,9 @@
 
             $('#spread-pie-3 center.loading').hide();
         }
+
+        var propagate_url_yy = '/newHotSpot/hotspotReport/yy_propagate/?mid='+mid;//多渠道 版
+        // public_ajax.call_request('get',propagate_url,initData);//多渠道 版
 
         // 渠道分类
             var newsData = [];
@@ -2606,22 +2607,21 @@
 
         // 更新下拉框
         $('#fishSource_select').on('change',function(){
-            console.log($(this).val());
-            var _val = $(this).val();
-            if(_val == 'news_new'){
-                showPropagate(newsData);
-            }else if(_val == 'weibo_news'){
-                showPropagate(weiboData);
-            }else if(_val == 'zhihu'){
-                showPropagate(zhihuData);
-            }else if(_val == 'forum'){
-                showPropagate(forumData);
-            }else if(_val == 'bbs_news'){
-                showPropagate(gubaData);
-            }else if(_val == 'weixin_news'){
-                showPropagate(wechatData);
-            }
-
+            // console.log($(this).val());
+            // var _val = $(this).val();
+            // if(_val == 'news_new'){
+            //     showPropagate(newsData);
+            // }else if(_val == 'weibo_news'){
+            //     showPropagate(weiboData);
+            // }else if(_val == 'zhihu'){
+            //     showPropagate(zhihuData);
+            // }else if(_val == 'forum'){
+            //     showPropagate(forumData);
+            // }else if(_val == 'bbs_news'){
+            //     showPropagate(gubaData);
+            // }else if(_val == 'weixin_news'){
+            //     showPropagate(wechatData);
+            // }
         })
 
 // 影响分析 （暂弃用）

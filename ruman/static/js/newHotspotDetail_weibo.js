@@ -2459,6 +2459,78 @@
             $('#spread-pie-3 center.loading').hide();
         }
 
+        // 新版鱼骨图== 2018-5-29
+        var propagate_url_xw = '/newHotSpot/hotspotReport/wb_propagate/?mid='+mid;
+        // public_ajax.call_request('get',propagate_url_xw,initData);//多渠道 版
+
+        // 渠道分类
+            var newsData = [];
+            var weiboData = [];
+            var zhihuData = [];
+            var forumData = [];//贴吧
+            var gubaData = [];//论坛
+            var wechatData = [];
+            function initData(data){
+                for(var i=0;i<data.length;i++){
+                    if(data[i].source == news){
+                        newsData.push(data[i]);
+                    }else if(data[i].source == weibo){
+                        weiboData.push(data[i]);
+                    }else if(data[i].source == zhihu){
+                        zhihuData.push(data[i]);
+                    }else if(data[i].source == forum){
+                        forumData.push(data[i]);
+                    }else if(data[i].source == guba){
+                        gubaData.push(data[i]);
+                    }else if(data[i].source == wechat){
+                        wechatData.push(data[i]);
+                    }
+                }
+
+                // 默认展示 新闻的
+                    showPropagate(newsData);
+            }
+
+        // 渲染鱼骨图
+            function showPropagate(data){
+                $(".fishBone").empty().append('<center>加载中...</center>');
+                if(data.length == 0){
+                    $(".fishBone").empty().append('<center>暂无记录</center>');
+                }else {
+                    var fishdata = [];
+                    for(var i=0;i<data.length;i++){
+                        fishdata.push({'发布时间':data[i].publish_time,'标题':data[i].title,'关键词':data[i].keyword,'发布者ID':data[i].uid,'粉丝数':data[i].user_fansnum,'地点':data[i].geo});
+                    }
+                    fishdata.push({'发布时间':' ','标题':' ','关键词':' ','发布者ID':' ','粉丝数':' ','地点':' '});//添加一条空内容
+                    $(".fishBone").empty();
+                    $(".fishBone").fishBone(fishdata);
+
+                    $('.fishBone li.item:last').hide();//隐藏那条空数据
+                }
+
+                $('#spread-pie-3 center.loading').hide();
+            }
+
+        // 更新下拉框
+            $('#fishSource_select').on('change',function(){
+                // console.log($(this).val());
+                var _val = $(this).val();
+                if(_val == 'news_new'){
+                    showPropagate(newsData);
+                }else if(_val == 'weibo_news'){
+                    showPropagate(weiboData);
+                }else if(_val == 'zhihu'){
+                    showPropagate(zhihuData);
+                }else if(_val == 'forum'){
+                    showPropagate(forumData);
+                }else if(_val == 'bbs_news'){
+                    showPropagate(gubaData);
+                }else if(_val == 'weixin_news'){
+                    showPropagate(wechatData);
+                }
+
+            })
+
 // 影响分析 （暂弃用）
     // 波及人数
     function influncePerson(){

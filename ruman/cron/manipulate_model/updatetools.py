@@ -389,7 +389,7 @@ def delete_nouse_weipan():
 def update_day_show():
     conn = default_db()
     cur = conn.cursor()
-    update = "UPDATE %s SET %s = '%d' WHERE %s = %d and %s = %d" % (TABLE_DAY,'ifshow',1,'ifshow',0,DAY_MANIPULATE_TYPE,3)
+    update = "UPDATE %s SET %s = '%d' WHERE %s = %d and %s = %d" % (TABLE_DAY,'ifshow',0,'ifshow',1,DAY_MANIPULATE_TYPE,4)
     try:
         cur.execute(update)
         conn.commit()
@@ -398,8 +398,25 @@ def update_day_show():
 
 def read_insert():
     f = csv.reader(open('weishizhi.csv'))
+    data2 = []
+    data1 = []
+    data0 = []
+    num = 0
     for row in f:
-        print 1
+        if num:
+            if int(row[0]) == 1:
+                data2.append(["%06d" % (int(row[2])),"%s-%02d-%02d" % (row[3].split('/')[0],int(row[3].split('/')[1]),int(row[3].split('/')[2])),"%s-%02d-%02d" % (row[4].split('/')[0],int(row[4].split('/')[1]),int(row[4].split('/')[2]))])
+            if int(row[0]) == 2:
+                data1.append(["%06d" % (int(row[2])),"%s-%02d-%02d" % (row[3].split('/')[0],int(row[3].split('/')[1]),int(row[3].split('/')[2])),"%s-%02d-%02d" % (row[4].split('/')[0],int(row[4].split('/')[1]),int(row[4].split('/')[2]))])
+            if int(row[0]) == 3:
+                data0.append(["%06d" % (int(row[2])),"%s-%02d-%02d" % (row[3].split('/')[0],int(row[3].split('/')[1]),int(row[3].split('/')[2])),"%s-%02d-%02d" % (row[4].split('/')[0],int(row[4].split('/')[1]),int(row[4].split('/')[2]))])
+        num += 1
+    df2 = pd.DataFrame(data=data2,columns=['stock_id','start_date','end_date'])
+    df1 = pd.DataFrame(data=data1,columns=['stock_id','start_date','end_date'])
+    df0 = pd.DataFrame(data=data0,columns=['stock_id','start_date','end_date'])
+    insert_sql(df2,1,2)
+    insert_sql(df1,1,1)
+    insert_sql(df0,1,0)
 
 if __name__=="__main__":
     #update_day_label()
@@ -420,7 +437,11 @@ if __name__=="__main__":
         columns=['stock_id','start_date','end_date'])'''
     #df2 = pd.DataFrame(data=[['600401','2014-12-24','2015-01-30']],
     #    columns=['stock_id','start_date','end_date'])
-    #insert_sql(df2)
+    df4 = pd.DataFrame(data=[['000002','2016-11-14','2016-11-15'],
+        ['300379','2016-11-21','2016-11-22'],
+        ['000012','2016-11-17','2016-11-17']],
+        columns=['stock_id','start_date','end_date'])
+    insert_sql(df4,4,2)
     #update_hotnews()
     #insert_type2()
     #update_hotnews()
@@ -429,4 +450,5 @@ if __name__=="__main__":
     #transfer2es('2018-01-01','2018-05-15')
     #update_announce()
     #delete_nouse_weipan()
-    update_day_show()
+    #update_day_show()
+    #read_insert()

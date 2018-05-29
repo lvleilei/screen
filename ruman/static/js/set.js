@@ -359,10 +359,10 @@
                     // min:'dataMin',
                     // max:'dataMax'
                     min:function(value) {
-                        return Math.floor(value.min - 2);//向下取整
+                        return Math.floor(value.min - .2);//向下取整
                     },
                     max:function(value) {
-                        return Math.ceil(value.max + 2);//向上取整
+                        return Math.ceil(value.max + .2);//向上取整
                     },
                 },
                 {
@@ -400,6 +400,70 @@
                 }
             ]
         };
+        if(manipulate_type_num == 5){
+            option_1 = {
+                title: {
+                    text: stock+'价格变化',
+                    x: 'center',
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                grid: {
+                    left: '0%',
+                    right: '9%',
+                    bottom: '0%',
+                    top:'17%',
+                    containLabel: true
+                },
+                legend: {
+                    data:[stock],
+                    orient:'horizontal',//horizontal
+                    // zlevel:99
+                    top:'7%',
+                    left:'center'
+                },
+                xAxis:  {
+                    // name:'时间',
+                    name:'',
+                    type: 'category',
+                    boundaryGap: true,
+                    // nameGap:40,
+                    // data: ['2017-3-1','2017-3-8','2017-3-15','2017-3-22','2017-3-29','2017-4-5','2017-4-12','2017-2-19'],
+                    data: date_data,
+                    axisLabel:{
+                        rotate:90
+                    }
+                },
+                yAxis: [
+                    {
+                        name:'价格(元)',
+                        type: 'value',
+                        axisLabel: {
+                            // formatter: '{value} °C'
+                        },
+                        // min:'dataMin',
+                        // max:'dataMax'
+                        min:function(value) {
+                            return Math.floor(value.min - .2);//向下取整
+                        },
+                        max:function(value) {
+                            return Math.ceil(value.max + .2);//向上取整
+                        },
+                    },
+                ],
+                series: [
+                    {
+                        name: stock,
+                        type:'line',
+                        data: price_data,
+                        showSymbol: true,
+                        hoverAnimation: true,
+                    },
+                ]
+            };
+        }
+
         myChart_1.hideLoading();
         myChart_1.setOption(option_1);
 
@@ -489,6 +553,61 @@
                 }
             ]
         };
+
+        if(manipulate_type_num == 5){
+            option_2 = {
+                title: {
+                    text: stock+'收益率变化',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:[stock],
+                    orient:'horizontal',//horizontal
+                    // zlevel:99
+                    top:'7%',
+                    left:'center'
+                },
+                grid: {
+                    left: '0%',
+                    right: '9%',
+                    bottom: '0%',
+                    top:'17%',
+                    containLabel: true
+                },
+                xAxis:  {
+                    name:'时间',
+                    type: 'category',
+                    boundaryGap: false,
+                    // data: ['2017-3-1','2017-3-8','2017-3-15','2017-3-22','2017-3-29','2017-4-5','2017-4-12','2017-2-19'],
+                    data: date_data,
+                    axisLabel:{
+                        rotate:90
+                    }
+                },
+                yAxis: {
+                    name:'收益率%',
+                    type: 'value',
+                    axisLabel: {
+                        // formatter: '{value} °C'
+                    }
+                },
+                color:['#c23531','#749f83','#2f4554'],
+                series: [
+                    {
+                        // name:'万科',
+                        name: stock,
+                        type:'line',
+                        // data:[1, 2, 2, 5, 3, 2, 0,4],
+                        data: ratio_data,
+                        showSymbol: true,
+                        hoverAnimation: true,
+                    },
+                ]
+            };
+        }
         myChart_2.hideLoading();
         myChart_2.setOption(option_2);
     }
@@ -731,8 +850,6 @@
 
 // 交易分析 // 十大股东
     var top10holders_url = '';
-
-
 
     //  渲染 下拉框
     var seasonBox_url = '/maniPulate/manipulateReport/seasonBox?id=' + id;
