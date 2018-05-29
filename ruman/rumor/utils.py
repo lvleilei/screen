@@ -65,16 +65,10 @@ def search_rumor():
     query_body = {
             'size':400,
             'query':{
-                "bool": {"must":[
-                    {'term':{
-                        'rumor_label': 1
-                        }},
-                    {'term':{"fin_label": 1}},
-                    {'term':{"cal_status":-1}}
-                    ]}
+                "term":{"cal_status":1}
         }
     }
-    results = weibo_es.search(index=ES_INDEX_CAL_LIST, body=query_body)
+    results = weibo_es.search(index="rumor_sample",doc_type="rumor", body=query_body)
     # print results
     if results:
         hotspotweibo = results['hits']['hits']

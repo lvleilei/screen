@@ -101,7 +101,7 @@ def manipulatetype(theday):
     dates = datelist(2014, 1, 1, 2025, 12, 30)
     timenow=to_tradeday(theday,-1)
     print timenow
-    '''
+    
     num=7
     frequency="week"
     day1=dates[findSortedPosition(dates,timenow)-num]
@@ -115,7 +115,7 @@ def manipulatetype(theday):
     num=90
     frequency="season"
     day3=dates[findSortedPosition(dates,timenow)-num]
-    test(timenow,day3,frequency)'''
+    test(timenow,day3,frequency)
 
     num=365
     frequency="year"

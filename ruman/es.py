@@ -77,7 +77,7 @@ def manipulateAnnouncement(id):   #展示操纵期内公告详情
 				announcement_type = u'利润分配'
 			elif a == 6:
 				announcement_type = u'关联交易'
-			elif a == 7 or a == 12 or a == 13:
+			elif a == 7:
 				announcement_type = u'定向增发'
 			elif a == 8:
 				announcement_type = u'配股'
@@ -85,6 +85,10 @@ def manipulateAnnouncement(id):   #展示操纵期内公告详情
 				announcement_type = u'停牌'
 			elif a == 10:
 				announcement_type = u'高管辞职'
+			elif a == 12:
+				announcement_type = u'定增开始'
+			elif a == 13:
+				announcement_type = u'定增结束'
 			else:
 				announcement_type = u'其他'
 			dic = {'publish_time':ts2datetimestr(res['publish_time']),'title':res['title'],'url':res['url'],'type':announcement_type}
@@ -358,13 +362,15 @@ def newhotspotcombineText():
 def hotspotandrumanText():
 	cur = defaultDatabase()
 
-	query_body = {"size":5000,"query":{"match_all": {}}}
-	sql = "SELECT * FROM %s " % (TABLE_HOTNEWS)
+	query_body = {"size":400,"query":{"match_all": {}}}
+	sql = "SELECT * FROM %s WHERE ifshow = 2" % (TABLE_HOTNEWS)
 
 	cur.execute(sql)
 	results = cur.fetchall()
-	res = es216.search(index=RUMORLIST_INDEX, body=query_body,request_timeout=100)
-	hits = res['hits']['hits']
+	reshot = es216.search(index='rumor_sample', body=query_body,doc_type="weibo",request_timeout=100)
+	resrumor = es216.search(index='rumor_sample', body=query_body,doc_type="rumor",request_timeout=100)
+	hitshot = reshot['hits']['hits']
+	hitsrumor = resrumor['hits']['hits']
 	result = []
 
 	for thing in results:
@@ -375,21 +381,34 @@ def hotspotandrumanText():
 		dic['keyword'] = thing[HOT_NEWS_KEY_WORD]
 		dic['ifruman'] = 0
 		result.append(dic)
-	result = sorted(result, key= lambda x:(x['publish_time']),reverse=True)[:10]   #只取时间最近的前十个
-	resultes = []
-	for hit in hits:
+	#result = sorted(result, key= lambda x:(x['publish_time']),reverse=True)   #只取时间最近的前十个
+	resulthot = []
+	resultrumor = []
+	for hit in hitshot:
 		dic = {}
 		dic['title'] = hit['_source']['text']
 		dic['publish_time'] = ts2date(hit['_source']['timestamp'])
 		dic['source'] = '微博'
 		dic['keyword'] = hit['_source']['keywords_string'].replace('&',' ')
-		dic['ifruman'] = hit['_source']['rumor_label']
+		#dic['ifruman'] = hit['_source']['rumor_label']
 		dic['id'] = hit['_id']
 		dic['type'] = hit['_type']
-		resultes.append(dic)
-	resultes = sorted(resultes, key= lambda x:(x['publish_time']),reverse=True)[:10]   #只取时间最近的前十个
+		resulthot.append(dic)
+	for hit in hitsrumor:
+		dic = {}
+		dic['title'] = hit['_source']['text']
+		dic['publish_time'] = ts2date(hit['_source']['timestamp'])
+		dic['source'] = '微博'
+		dic['keyword'] = hit['_source']['keywords_string'].replace('&',' ')
+		#dic['ifruman'] = hit['_source']['rumor_label']
+		dic['id'] = hit['_id']
+		dic['type'] = hit['_type']
+		resultrumor.append(dic)
+	#resultes = sorted(resultes, key= lambda x:(x['publish_time']),reverse=True)[:10]   #只取时间最近的前十个
 	#print len(resultes)
-	result.extend(resultes)
+	result.extend(resulthot)
+	result.extend(resultrumor)
+	result = sorted(result, key= lambda x:(x['publish_time']),reverse=True)
 	#print len(result)
 
 	return result

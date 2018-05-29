@@ -775,3 +775,9 @@ p.load {
     text-align: center;
     margin: 0;
 }
+
+/* 鱼骨图链接 */
+.fishBone li a {
+    font-size: 12px !important;
+    padding: 0 !important;
+}

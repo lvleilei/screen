@@ -282,7 +282,7 @@ def update_type5_pro():
         num += 1
 
 if __name__ == '__main__':
-    #ggdr(2018,3,7,2018,5,15)
+    ggdr(2011,1,1,2012,1,3)
     #ggdr_today()
     #delete()
-    update_type11()
+    #update_type11()#

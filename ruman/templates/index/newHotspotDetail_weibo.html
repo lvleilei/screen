@@ -51,6 +51,15 @@
         .VivaTimeline dl dd.pos-right .time{
             margin-left: -210px;
         }
+
+        p.tit {
+            display: inline-block;
+        }
+        #container .lieOpt {
+            display: inline-block;
+            font-size: 0.14rem;
+            margin-left: 0.3rem;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="/static/css/fishBone.css">
 {% endblock %}
@@ -898,6 +907,18 @@
                         <!-- <span style="font-size: 0.18rem;">多通道溯源</span> -->
                         <span style="font-size: 0.18rem;">溯源分析</span>
                     </p>
+                    <div class="lieOpt">
+                        <!-- <span class="ct-tit">呈现方式：</span> -->
+                        <span class="ct-tit" style="margin-left: 0.1rem;">渠道：</span>
+                        <select id="fishSource_select">
+                            <option value="news_new" selected>新闻</option>
+                            <option value="weibo_news">微博</option>
+                            <option value="zhihu">知乎</option>
+                            <option value="forum">贴吧</option>
+                            <option value="bbs_news">论坛</option>
+                            <option value="weixin_news">微信</option>
+                        </select>
+                    </div>
                     <div class="fishBone" id="spread-pie-3">
                         <!-- <a class="prev"></a>
                         <a class="next"></a>

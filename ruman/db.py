@@ -111,7 +111,7 @@ def manipulateWarning():   #预警数合计总览,目前为了展示theday为定
 
 def manipulateWarningText():   #列出预警文本
 	cur = defaultDatabase()
-	theday = '2018-05-21'
+	theday = '2018-05-22'
 	sql = "SELECT * FROM " + TABLE_DAY + " WHERE %s <= '%s'" % (DAY_END_DATE,theday)
 	cur.execute(sql)
 	results = cur.fetchall()
@@ -370,7 +370,7 @@ def manipulateType(date):   #根据day表统计不同操纵类型的股票并展
 		dic["高送转"] = results[TYPE1]
 		dic["定向增发"] = results[TYPE2]
 		dic["伪市值管理"] = results[TYPE3]
-		dic["散步牟利消息"] = results[TYPE4]
+		dic["散布信息牟利"] = results[TYPE4]
 		dic["尾盘操纵"] = results[TYPE5]
 		typelist = []
 		num = []

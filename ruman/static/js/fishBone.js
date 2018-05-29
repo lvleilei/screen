@@ -174,6 +174,7 @@ $.fn.fishBone = function(data) {
                     }else {
                         //LL
                         var oldValue = value;
+                        // console.log(value);
                         if(value.length>14){
                             value = value.substr(0,14)+'...';
                         }

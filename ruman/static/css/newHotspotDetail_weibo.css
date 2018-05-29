@@ -758,3 +758,18 @@ p.load {
     background-color: #23527c;
     color:#fff;
 }
+/* 下拉框 */
+    #container .lieOpt select {
+        background: transparent;
+        border: 1px solid silver;
+        border-radius: 5px;
+        padding: 3px 7px;
+        color: #333;
+        text-align: center;
+
+        margin:0;
+    }
+.fishBone li a {
+    font-size: 12px !important;
+    padding: 0 !important;
+}

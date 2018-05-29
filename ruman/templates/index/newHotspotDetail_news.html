@@ -50,6 +50,10 @@
             /* margin-left: -.95335667rem; */
             /* text-align: right; */
         }
+
+        p.tit {
+            display: inline-block;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="/static/css/fishBone.css">
 {% endblock %}
@@ -113,7 +117,11 @@
             <div class="tab-content" id="tabContent">
                 <!-- 传播分析 -->
                 <div role="tabpanel" class="_table tab-pane clearfix spread active" id="spread">
-                    <h3 style="display: inline-block;font-weight:700;"><i class="icon icon-asterisk"></i>&nbsp;传播分析</h3>
+                    <!-- <h3 style="display: inline-block;font-weight:700;"><i class="icon icon-asterisk"></i>&nbsp;传播分析</h3> -->
+                    <p class="tit" >
+                        <span class="tit-1"></span>
+                        <span style="font-size: 0.18rem;">溯源分析</span>
+                    </p>
                     <!-- <div class="fishBone" id="spread-pie-3">
                         <a class="prev"></a>
                         <a class="next"></a>
@@ -139,7 +147,7 @@
 
                 <!-- 语义分析 -->
                 <div role="tabpanel" class="_table tab-pane clearfix semantics" id="word">
-                    <h3 style=";font-weight:700;"><i class="icon icon-comments-alt"></i>&nbsp;语义分析</h3>
+                    <!-- <h3 style=";font-weight:700;"><i class="icon icon-comments-alt"></i>&nbsp;语义分析</h3> -->
                     <p class="tit" style="display:inline-block;">
                         <span class="tit-1"></span>
                         <span style="font-size: 0.18rem;">关键词云</span>
@@ -282,7 +290,11 @@
 
                 <!-- 演化分析 -->
                 <div role="tabpanel" class="_table tab-pane clearfix analysis" id="evolution">
-                    <h3 style="display: inline-block;font-weight:700;"><i class="icon icon-random"></i>&nbsp;演化分析</h3>
+                    <!-- <h3 style="display: inline-block;font-weight:700;"><i class="icon icon-random"></i>&nbsp;热度演化</h3> -->
+                    <p class="tit" >
+                        <span class="tit-1"></span>
+                        <span style="font-size: 0.18rem;">热度演化</span>
+                    </p>
                     <div class="lieOpt">
                         <span class="ct-tit">呈现方式：</span>
                         <select id="time_select">
