@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import pandas as pd
+from ruman.time_utils import ts2date
 
 def read_data(path):
     df = pd.read_csv(path)
@@ -30,6 +31,8 @@ def weibo_fix(weibo_data):
             if real_mid[:-1] == str(raw_id)[:-1]:
                 # print raw_id,real_mid
                 weibo_data['id'][index] = int(real_mid)
+                # print type(weibo_data['publish_time'])
+                weibo_data['publish_time'][index] = str(weibo_data['publish_time'][index])
                 break
     # print weibo_data['id']
     return weibo_data
