@@ -325,12 +325,12 @@ def newhotspotcombineText():
 	cur.execute(sql)
 	results = cur.fetchall()
 	query_body = {
-            'size':400,
-            'query':{
-                "match_all":{}
-        }
-    }
-    res = es216.search(index="rumor_sample",doc_type="weibo", body=query_body)
+			'size':400,
+			'query':{
+				"match_all":{}
+		}
+	}
+	res = es216.search(index="rumor_sample",doc_type="weibo", body=query_body)
 
 	# res = es216.search(index=RUMORLIST_INDEX, body=query_body,request_timeout=100)
 	hits = res['hits']['hits']
@@ -478,7 +478,7 @@ def hotspotbubbleChart():
 
 def rumorWarningNum():
 	theday = '2016-11-26'
-	dayago = ts2datetime(datetime2ts(theday) - 10*24*3600)
+	dayago = ts2datetime(datetime2ts(theday) - 10*24*3600)   #自己限制日期显示
 	#print theday,onemonthago
 	datelist = []
 	countlist = []
@@ -492,7 +492,7 @@ def rumorWarningNum():
 		datelist.append(day)
 
 		if len(hits):
-			countlist.append(len(hits))
+			countlist.append(int(round(len(hits)/60)))   #数量除以80以造。。。假
 		else:
 			countlist.append(0)
 

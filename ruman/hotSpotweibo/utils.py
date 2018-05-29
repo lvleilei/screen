@@ -74,7 +74,7 @@ def search_hotspot():
 
 def search_hotspot_infor(en_name):
     query_body = {"size":10,"query":{"match_phrase": {"en_name":en_name}}}
-    res = weibo_es.search(index=ES_INDEX_CAL_LIST, body=query_body)
+    res = weibo_es.search(index='rumor_sample', body=query_body)
     hits = res['hits']['hits']
     if len(hits):
         dic = {}

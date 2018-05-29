@@ -111,7 +111,7 @@ def manipulateWarning():   #预警数合计总览,目前为了展示theday为定
 
 def manipulateWarningText():   #列出预警文本
 	cur = defaultDatabase()
-	theday = '2018-05-22'
+	theday = SHOW_DATE
 	sql = "SELECT * FROM " + TABLE_DAY + " WHERE %s <= '%s'" % (DAY_END_DATE,theday)
 	cur.execute(sql)
 	results = cur.fetchall()
@@ -493,10 +493,10 @@ def manipulatePrice(id):   #获取本次操作期间的股价和收益率
 		ratio = []
 		D_value = []
 		for num in range(1,len(price)):
-			#a = (industryprice[num] - industryprice[num - 1]) / industryprice[num - 1]   #同行业收益率
-			#b = (price[num] - price[num - 1]) / price[num - 1]   #本股票收益率
-			a = (industryprice[num] - industryprice[1]) / industryprice[1]
-			b = (price[num] - price[1]) / price[1]
+			a = (industryprice[num] - industryprice[num - 1]) / industryprice[num - 1]   #同行业收益率
+			b = (price[num] - price[num - 1]) / price[num - 1]   #本股票收益率
+			#a = (industryprice[num] - industryprice[1]) / industryprice[1]
+			#b = (price[num] - price[1]) / price[1]
 			industry_ratio.append(a)
 			ratio.append(b)
 			D_value.append(b - a)   #差值绝对值
@@ -526,7 +526,8 @@ def manipulatePrice(id):   #获取本次操作期间的股价和收益率
 		D_value = []
 		for num in range(1,len(price)):
 			#a = (industryprice[-1] - industryprice[num]) / industryprice[num]   #同行业收益率
-			b = (end_price - price[num]) / price[num]   #本股票收益率
+			b = (price[num] - price[num - 1]) / price[num - 1]
+			#b = (end_price - price[num]) / price[num]   #本股票收益率
 			#industry_ratio.append(a)
 			ratio.append(b)
 			#D_value.append(b - a)   #差值绝对值
@@ -832,7 +833,7 @@ def manipulateCredit(id):
 	stock = get_stock(id)
 	stock_id = stock[DAY_STOCK_ID]
 	end_date = stock[DAY_END_DATE]
-	#end_date = '2018-05-27'
+	end_date = '2018-05-27'
 	sql = "SELECT * FROM %s WHERE %s = '%s' and %s <= '%s' ORDER BY %s DESC" % (TABLE_PUNISH,PUNISH_STOCK_ID,stock_id,PUNISH_PUNISH_TIME,end_date,PUNISH_PUNISH_TIME)
 	cur.execute(sql)
 	results = cur.fetchall()
