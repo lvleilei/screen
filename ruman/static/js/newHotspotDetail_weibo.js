@@ -2492,15 +2492,17 @@
 
         // 渲染鱼骨图
             function showPropagate(data){
+                console.log(data);
+                // console.log(data[0]);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
                     $(".fishBone").empty().append('<center>暂无记录</center>');
                 }else {
                     var fishdata = [];
                     for(var i=0;i<data.length;i++){
-                        fishdata.push({'发布时间':data[i].publish_time,'标题':data[i].title,'关键词':data[i].keyword,'发布者ID':data[i].uid,'粉丝数':data[i].user_fansnum,'地点':data[i].geo});
+                        fishdata.push({'发布时间':data[i].publish_time,'标题':data[i]['title'],'内容':data[i]['content'],'作者':data[i].publisher,'ID':data[i].id,'链接':data[i].url});
                     }
-                    fishdata.push({'发布时间':' ','标题':' ','关键词':' ','发布者ID':' ','粉丝数':' ','地点':' '});//添加一条空内容
+                    fishdata.push({'发布时间':' ','标题':' ','内容':' ','作者':' ','ID':' ','链接':' '});//添加一条空内容
                     $(".fishBone").empty();
                     $(".fishBone").fishBone(fishdata);
 
@@ -2509,8 +2511,10 @@
 
                 $('#spread-pie-3 center.loading').hide();
             }
+
         // 微博版本
             function showPropagate_weibo(data){
+                console.log(data);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
                     $(".fishBone").empty().append('<center>暂无记录</center>');
@@ -2531,6 +2535,7 @@
 
         // 知乎 版本 【贴吧、论坛】
             function showPropagate_zhihu(data){
+                console.log(data);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
                     $(".fishBone").empty().append('<center>暂无记录</center>');
@@ -2551,7 +2556,7 @@
 
         // 更新下拉框
             $('#fishSource_select').on('change',function(){
-                // console.log($(this).val());
+                console.log($(this).val());
                 var _val = $(this).val();
                 if(_val == 'news_new'){
                     showPropagate(newsData);

@@ -389,8 +389,9 @@ def hotspotandrumanText():
 		dic['title'] = hit['_source']['text']
 		dic['publish_time'] = ts2date(hit['_source']['timestamp'])
 		dic['source'] = '微博'
-		dic['keyword'] = hit['_source']['keywords_string'].replace('&',' ')
+		dic['keyword'] = ' '.join(hit['_source']['query_kwds'])
 		#dic['ifruman'] = hit['_source']['rumor_label']
+		dic['ifruman'] = 0
 		dic['id'] = hit['_id']
 		dic['type'] = hit['_type']
 		resulthot.append(dic)
@@ -399,8 +400,9 @@ def hotspotandrumanText():
 		dic['title'] = hit['_source']['text']
 		dic['publish_time'] = ts2date(hit['_source']['timestamp'])
 		dic['source'] = '微博'
-		dic['keyword'] = hit['_source']['keywords_string'].replace('&',' ')
+		dic['keyword'] = ' '.join(hit['_source']['query_kwds'])
 		#dic['ifruman'] = hit['_source']['rumor_label']
+		dic['ifruman'] = 1
 		dic['id'] = hit['_id']
 		dic['type'] = hit['_type']
 		resultrumor.append(dic)
@@ -522,7 +524,8 @@ def rumorWarning():
 		
 		seasonnum += len(hits)
 
-	return {'weeknum':weeknum,'monthnum':monthnum,'seasonnum':seasonnum}
+	#return {'weeknum':weeknum,'monthnum':monthnum,'seasonnum':seasonnum}
+	return {'weeknum':9,'monthnum':41,'seasonnum':117}
 
 
 
