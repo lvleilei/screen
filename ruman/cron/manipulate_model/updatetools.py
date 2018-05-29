@@ -389,7 +389,7 @@ def delete_nouse_weipan():
 def update_day_show():
     conn = default_db()
     cur = conn.cursor()
-    update = "UPDATE %s SET %s = '%d' WHERE %s = %d and %s = %d" % (TABLE_DAY,'ifshow',0,'ifshow',1,DAY_MANIPULATE_TYPE,4)
+    update = "UPDATE %s SET %s = '%d' WHERE %s = %d and %s = %d" % (TABLE_DAY,'ifpunish',0,'ifpunish',1,DAY_MANIPULATE_TYPE,1)
     try:
         cur.execute(update)
         conn.commit()
@@ -437,11 +437,12 @@ if __name__=="__main__":
         columns=['stock_id','start_date','end_date'])'''
     #df2 = pd.DataFrame(data=[['600401','2014-12-24','2015-01-30']],
     #    columns=['stock_id','start_date','end_date'])
+    '''
     df4 = pd.DataFrame(data=[['000002','2016-11-14','2016-11-15'],
         ['300379','2016-11-21','2016-11-22'],
         ['000012','2016-11-17','2016-11-17']],
         columns=['stock_id','start_date','end_date'])
-    insert_sql(df4,4,2)
+    insert_sql(df4,4,2)'''
     #update_hotnews()
     #insert_type2()
     #update_hotnews()
@@ -450,5 +451,5 @@ if __name__=="__main__":
     #transfer2es('2018-01-01','2018-05-15')
     #update_announce()
     #delete_nouse_weipan()
-    #update_day_show()
+    update_day_show()
     #read_insert()

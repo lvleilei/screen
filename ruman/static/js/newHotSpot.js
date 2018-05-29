@@ -199,7 +199,12 @@
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        return '<span style="cursor:pointer;color:white;" onclick="jumpFrame_1(\''+row.id+'\',\''+row.source+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
+                        if(row.source == '新闻'){
+                            return '<span style="cursor:pointer;color:white;" onclick="jumpFrame_1(\''+row.id+'\',\''+row.source+'\',\''+row.text_id+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
+                        }else if(row.source == '微博'){
+                            return '<span style="cursor:pointer;color:white;" onclick="jumpFrame_1(\''+row.id+'\',\''+row.source+'\',\''+row.mid+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
+                        }
+
                     }
                 },
                 // {
@@ -227,16 +232,16 @@
     // hotSpot(hotSpotData);
 
 // 跳转详情页
-    function jumpFrame_1(id, source) {
+    function jumpFrame_1(id, source, textOrmid) {
         var html = '';
         // html='/index/hotDetail?id='+id;
         // html='/index/newHotspotDetail?id='+id;
         // window.location.href=html;
 
         if(source == '微博'){
-            html='/index/newHotspotDetail_weibo?id='+id;
+            html='/index/newHotspotDetail_weibo?id='+id+'&mid='+textOrmid;
         }else if(source == '新闻'){
-            html='/index/newHotspotDetail_news?id='+id;
+            html='/index/newHotspotDetail_news?id='+id+'&text_id='+textOrmid;
         }
         window.open(html);
     }

@@ -111,10 +111,11 @@ def manipulateWarning():   #预警数合计总览,目前为了展示theday为定
 
 def manipulateWarningText():   #列出预警文本
 	cur = defaultDatabase()
-	theday = SHOW_DATE
+	theday = '2018-05-21'
 	sql = "SELECT * FROM " + TABLE_DAY + " WHERE %s <= '%s'" % (DAY_END_DATE,theday)
 	cur.execute(sql)
 	results = cur.fetchall()
+	#print len(results)
 	result = []
 	result1 = []
 	result0 = []

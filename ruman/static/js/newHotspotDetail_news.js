@@ -309,8 +309,8 @@
 
     var fishSource_val = $('#fishSource_select').val();
     var propagate_url = '/hotSpot/hotspotReport/propagate/?source='+fishSource_val+'&id='+id;
-    // var propagate_url = '/hotSpot/hotspotReport/propagate/?source=bbs&id=1';
-    public_ajax.call_request('get',propagate_url,propagate);
+    // var propagate_url = '/hotSpot/hotspotReport/propagate/?source=bbs&id=1'; //测试的
+    // public_ajax.call_request('get',propagate_url,propagate);
     function propagate(data){
         $(".fishBone").empty().append('<center>加载中...</center>');
         if(data.length == 0){
@@ -349,7 +349,7 @@
 
     // 新版鱼骨图== 2018-5-29
         var propagate_url_xw = '/newHotSpot/hotspotReport/xw_propagate/?text_id='+text_id;
-        // public_ajax.call_request('get',propagate_url_xw,initData);//多渠道 版
+        public_ajax.call_request('get',propagate_url_xw,initData);//多渠道 版
 
         // 渠道分类
             var newsData = [];
@@ -359,6 +359,7 @@
             var gubaData = [];//论坛
             var wechatData = [];
             function initData(data){
+                console.log("111111");
                 for(var i=0;i<data.length;i++){
                     if(data[i].source == news){
                         newsData.push(data[i]);
@@ -374,22 +375,23 @@
                         wechatData.push(data[i]);
                     }
                 }
-
+                console.log(newsData);
                 // 默认展示 新闻的
                     showPropagate(newsData);
             }
 
         // 渲染鱼骨图
             function showPropagate(data){
+                console.log(data);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
                     $(".fishBone").empty().append('<center>暂无记录</center>');
                 }else {
                     var fishdata = [];
                     for(var i=0;i<data.length;i++){
-                        fishdata.push({'发布时间':data[i].publish_time,'标题':data[i].title,'关键词':data[i].keyword,'发布者ID':data[i].uid,'粉丝数':data[i].user_fansnum,'地点':data[i].geo});
+                        fishdata.push({'发布时间':data[i].publish_time,'标题':data[i].title,'内容':data[i].content,'作者':data[i].publisher,'ID':data[i].AWNN6WUtvel9p8sC_ate,'链接':data[i].url});
                     }
-                    fishdata.push({'发布时间':' ','标题':' ','关键词':' ','发布者ID':' ','粉丝数':' ','地点':' '});//添加一条空内容
+                    fishdata.push({'发布时间':' ','标题':' ','内容':' ','作者':' ','ID':' ','链接':' '});//添加一条空内容
                     $(".fishBone").empty();
                     $(".fishBone").fishBone(fishdata);
 
@@ -416,7 +418,6 @@
                 }else if(_val == 'weixin_news'){
                     showPropagate(wechatData);
                 }
-
             })
 
 // 字符云 ====
@@ -578,7 +579,7 @@
                             data:data
                         }]
                     };
-                    console.log(option);
+                    // console.log(option);
 
                     wordCloud_myChart.hideLoading();
                     wordCloud_myChart.clear().setOption(option);

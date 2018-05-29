@@ -38,12 +38,14 @@ def hotweiboDetail():
 @index.route('/newHotspotDetail_weibo/')
 def newHotspotDetail_weibo():
 	id = request.args.get('id','')
-	return render_template('index/newHotspotDetail_weibo.html',id=id)
+	mid = request.args.get('mid','')
+	return render_template('index/newHotspotDetail_weibo.html',id=id,mid=mid)
 
 @index.route('/newHotspotDetail_news/')
 def newHotspotDetail_news():
 	id = request.args.get('id','')
-	return render_template('index/newHotspotDetail_news.html',id=id)
+	text_id = request.args.get('text_id','')
+	return render_template('index/newHotspotDetail_news.html',id=id,text_id=text_id)
 
 # ========
 
