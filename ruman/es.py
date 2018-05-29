@@ -89,6 +89,7 @@ def manipulateAnnouncement(id):   #展示操纵期内公告详情
 				announcement_type = u'其他'
 			dic = {'publish_time':ts2datetimestr(res['publish_time']),'title':res['title'],'url':res['url'],'type':announcement_type}
 			result.append(dic)
+	result = sorted(result, key= lambda x:(x['publish_time']))
 	return result
 
 def manipulateLargetrans(id):   #展示大宗交易记录
@@ -281,6 +282,7 @@ def hotspotTopicaxis(id,source):
 	result = sorted(result, key= lambda x:(x['month']),reverse=True)
 	result = result
 	return result
+	
 def newhotspotcombineText():
 	cur = defaultDatabase()
 

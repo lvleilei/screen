@@ -6,5 +6,7 @@ data = [{'title':'贾跃亭又要动刀子，谁将是乐视移动最大的变�
             'id':4045473440545680}]
 sample_data = pd.DataFrame(data)
 selected = sample_data.loc[sample_data['id']==4045473440545680]
-for item in selected:
-    print item
+for item in selected.index:
+    dict_item = selected.ix[item].to_dict
+    print dict_item
+    print type(dict_item)

@@ -218,7 +218,7 @@ def insert_type2():
 def delete_nouse():
     conn = default_db()
     cur = conn.cursor()
-    sql = "SELECT * FROM %s WHERE stock_id = '%s' and date >= '%s' and date <= '%s'" % (TABLE_MARKET_DAILY,'002609','2010-12-30','2011-12-29')
+    sql = "SELECT * FROM %s WHERE stock_id = '%s' and date >= '%s' and date <= '%s'" % (TABLE_MARKET_DAILY,'603991','2010-12-30','2011-12-29')
     cur.execute(sql)
     results = cur.fetchall()
     num = len(results) 
@@ -365,6 +365,21 @@ def delele_trading():
         except Exception, e:
             print e
 
+def delete_nouse_weipan():
+    conn = default_db()
+    cur = conn.cursor()
+    sql = "SELECT * FROM %s WHERE stock_id = '%s' and date = '%s'" % ('weipan_show','600099','2016-12-23')
+    cur.execute(sql)
+    results = cur.fetchall()
+    num = len(results) 
+    for result in results:
+        delete = "DELETE FROM %s WHERE %s = %d" % ('weipan_show',ES_HOLDERS_SHOW_ID,result[ES_HOLDERS_SHOW_ID])
+        try:
+            cur.execute(delete)
+            conn.commit()
+        except Exception, e:
+            print e
+
 if __name__=="__main__":
     #update_day_label()
     #delete_holders_pct()
@@ -392,4 +407,4 @@ if __name__=="__main__":
     #count()
     #transfer2es('2018-01-01','2018-05-15')
     #update_announce()
-    delele_trading()
+    delete_nouse_weipan()

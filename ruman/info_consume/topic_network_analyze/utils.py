@@ -142,12 +142,12 @@ def get_gexf(topic, identifyDate, identifyWindow):
 def find2jump(uid,hops,G):
 	# G=CONSTANTG
 
-	print G.number_of_nodes()
-	print G.number_of_edges()
+	# print G.number_of_nodes()
+	# print G.number_of_edges()
 	lis=[]
 	lis.append(uid)
 	local_nodes = set(lis)
-	print local_nodes
+	# print local_nodes
 	for hop in range(0, hops):
 		local_nodes = local_nodes | find_friends(local_nodes, G)
 		# print "33333"
@@ -219,7 +219,7 @@ def pagerank(G,topNum):
 	pr_dict= sorted(pr_dict.iteritems(), key=lambda d:d[1], reverse = True)
 	i=1
 	for key in pr_dict:
-		print key[0]
+		# print key[0]
 		nodes_new.append(key[0])
 		if i>=topNum:
 			break
@@ -248,9 +248,9 @@ def get_trend_pusher(topic):
 	topic =topic[:20]
 	items = db.session.query(TrendPusher).filter(TrendPusher.topic==topic).all()
 	#for item in items:
-		#print dir(item)
+		## print dir(item)
 	#return items
-	print items
+	# print items
 	results = []
 	for item in items:
 		result = {}
@@ -269,12 +269,12 @@ def get_trend_pusher(topic):
 
 
 def get_trend_maker_old(topic, identifyDate, identifyWindow):
-	print topic,identifyDate,identifyWindow
+	# print topic,identifyDate,identifyWindow
 	items = db.session.query(TrendMaker).filter(TrendMaker.topic==topic ,\
 														TrendMaker.date==identifyDate ,\
 														TrendMaker.windowsize==identifyWindow).all()
 	
-	print items
+	# print items
 	results = []
 	for item in items:
 		result = {}
@@ -294,7 +294,7 @@ def get_trend_maker(topic):
 	# print topic,identifyDate,identifyWindow
 	items = db.session.query(TrendMaker).filter(TrendMaker.topic==topic).all()
 	
-	print items
+	# print items
 	results = []
 	for item in items:
 		result = {}

@@ -97,7 +97,7 @@ def ajax_imagine():
     size = request.args.get('size', 100)
     keywords_list = query_keywords.split(',')
     weight_list = query_weight.split(',')
-    print uid
+    # print uid
     if len(keywords_list) != len(weight_list):
         return json.dumps([])
 
@@ -109,7 +109,7 @@ def ajax_imagine():
     if not query_fields_dict:
         user_imagine_dict = {}
         imagine_setting = R_ADMIN.hget(submit_user, "imagine_setting")
-        print '112',imagine_setting
+        # print '112',imagine_setting
         if not imagine_setting:
             user_info = es_user_portrait.get(index="user_portrait_1222", doc_type="user", id=uid, _source=False, fields=["domain"])['_source']
             user_domain = user_info['fields']['domain'][0]
@@ -123,7 +123,7 @@ def ajax_imagine():
 
     query_fields_dict['size'] = int(size)
 
-    print '125',query_fields_dict
+    # print '125',query_fields_dict
     result = []
     if uid and query_fields_dict:
         result = imagine(submit_user, uid, query_fields_dict)

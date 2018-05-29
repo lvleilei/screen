@@ -49,7 +49,7 @@ def submit_task():
     topic = request.args.get('topic','')
     status = submit(topic,start_ts,end_ts,submit_user)
 
-    print status
+    # print status
 
     return json.dumps(status)
 
@@ -60,7 +60,7 @@ def delete_task():
     end_ts = request.args.get('end_ts','')
     submit_user = request.args.get('submit_user','')
     en_name = request.args.get('en_name','')
-    print '???'
+    # print '???'
     status = delete(en_name,start_ts,end_ts,submit_user)
     return json.dumps(status)
 

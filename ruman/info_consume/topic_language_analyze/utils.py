@@ -393,10 +393,10 @@ def get_subopinion_new(topic,start_ts,end_ts,sort_item='timestamp'):
     }
     # print query_body
     results = []
-    print topic
+    # print topic
     weibos = weibo_es.get(index=subopinion_index_name,id=topic,doc_type="text")['_source']
 
-    print weibos
+    # print weibos
     for k,weibo in weibos.items():
         if k != 'start_ts' and k !='end_ts':
             result = {}
@@ -436,9 +436,9 @@ def get_weibo_content(topic,start_ts,end_ts,opinion,sort_item='timestamp'): #微
     weibo_dict = {}
     #a = json.dumps(opinion)
     #opinion = '圣保罗_班底_巴西_康熙'
-    print 'opinion:::::::::',opinion
-    print 'topic:::::::;:::',topic
-    print type(start_ts),type(end_ts)
+    # print 'opinion:::::::::',opinion
+    # print 'topic:::::::;:::',topic
+    # print type(start_ts),type(end_ts)
     query_body = {
         'query':{
             'bool':{
@@ -451,10 +451,10 @@ def get_weibo_content(topic,start_ts,end_ts,opinion,sort_item='timestamp'): #微
             }
         }
     }  #没有查到uid   每次的id不一样   
-    print query_body
+    # print query_body
     weibos = weibo_es.search(index=subopinion_index_name,doc_type=subopinion_index_type,body=query_body)['hits']['hits']
-    #print weibo_es,subopinion_index_name,subopinion_index_type,query_body
-    print len(weibos)
+    ## print weibo_es,subopinion_index_name,subopinion_index_type,query_body
+    # print len(weibos)
     if weibos:
         weibos = json.loads(weibos[0]['_source']['cluster_dump_dict'])
         for weibo in weibos.values():#jln0825
@@ -475,7 +475,7 @@ def get_weibo_content(topic,start_ts,end_ts,opinion,sort_item='timestamp'): #微
                 weibo_content['photo_url'] = 'unknown'
             weibo_dict[weibo_content['mid']] = weibo_content
         results = sorted(weibo_dict.items(),key=lambda x:x[1][sort_item],reverse=True)
-        #print results
+        ## print results
         return results
     else:
         return 'no results'
@@ -487,7 +487,7 @@ def cul_key_weibo_time_count(topic,news_topics,start_ts,over_ts,during):
     during = Day
     for clusterid,keywords in news_topics.iteritems(): #{u'd2e97cf7-fc43-4982-8405-2d215b3e1fea': [u'\u77e5\u8bc6', u'\u5e7f\u5dde', u'\u9009\u624b']}
         if len(keywords)>0:
-            print len(keywords)
+            # print len(keywords)
             start_ts = int(start_ts)
             over_ts = int(over_ts)
 
@@ -524,7 +524,7 @@ def cul_key_weibo_time_count(topic,news_topics,start_ts,over_ts,during):
                         }
                 key_weibo = weibo_es.search(index=topic,doc_type=weibo_index_type,body=query_body)
                 key_weibo_count = key_weibo['hits']['total']  #分时间段的类的数量
-                print key_weibo_count
+                # print key_weibo_count
                 time_dict[ts2datetime(end_ts)] = key_weibo_count
 
             key_weibo_time_count[clusterid] = sorted(time_dict.items(),key=lambda x:x[0])
@@ -559,7 +559,7 @@ def get_sen_ratio(topic,start_ts,end_ts):
 
 def get_person_value(uid):
     #认证类型
-    #print es_user_profile,profile_index_name,profile_index_type,uid
+    ## print es_user_profile,profile_index_name,profile_index_type,uid
     try:
         value_static = es_bci_history.get(index = bci_history_index_name,doc_type = bci_history_index_type,id=uid)
         value_inf = es_user_portrait.get(index = portrait_index_name,doc_type = portrait_index_type,id=uid)
@@ -567,13 +567,13 @@ def get_person_value(uid):
     except:
         return 'no'
     fans_max = es_bci_history.search(index = bci_history_index_name,doc_type = bci_history_index_type,body={'query':{'match_all':{}},'sort':{'user_fansnum':{'order':'desc'}},'size':1})['hits']['hits'][0]['_source']['user_fansnum']
-    print 'max:',fans_max
-    #print static['found']
+    # print 'max:',fans_max
+    ## print static['found']
     if static['found']==False:
         return 'no'
     else:
         static = static['_source']
-    #print "static",static
+    ## print "static",static
     try:
         ver_calue = verified_value[static['verified_type']]
     except:
@@ -589,7 +589,7 @@ def get_person_value(uid):
     influence_max = es_user_portrait.search(index = portrait_index_name,doc_type = portrait_index_type,body={'query':{'match_all':{}},'sort':{'influence':{'order':'desc'}},'size':1})['hits']['hits'][0]['_source']['influence']
     influence_value = float(value_inf['_source']['influence'])/float(influence_max)
     final= (ver_calue*0.1+times*0.05+fans_value+influence_value*1.2)*30
-    print ver_calue,times,fans_value,influence_value
+    # print ver_calue,times,fans_value,influence_value
     return final
     
 def get_mode(arr):  
@@ -626,4 +626,4 @@ if __name__ == '__main__':
     }
     
     symbol = weibo_es.search(index=topics_river_index_name,doc_type=topics_river_index_type,body=query_body)['hits']['hits'][0]['_source']
-    print symbol
+    # print symbol

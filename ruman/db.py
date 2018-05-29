@@ -466,6 +466,7 @@ def manipulateHistory(id):   #给出该股票的历史操纵数据
 	return result
 
 def manipulatePrice(id):   #获取本次操作期间的股价和收益率
+	cur = defaultDatabase()
 	conn = defaultDatabaseConn()
 	stock = get_stock(id)
 	stock_id = stock[DAY_STOCK_ID]
@@ -496,9 +497,16 @@ def manipulatePrice(id):   #获取本次操作期间的股价和收益率
 		result = {'date':datelist[1:],'industry_price':industryprice[1:],'price':price[1:],'industry_ratio':industry_ratio,'ratio':ratio,'D_value':D_value}
 		return result
 	else:   #尾盘操纵必为1天，开始结束日期相同
-		sql = "SELECT * FROM %s WHERE %s = '%s' and %s = '%s'" % (TABLE_WEIPAN_SHOW,WEIPAN_SHOW_STOCK_ID,stock_id,WEIPAN_SHOW_DATE,end_date)
+		pricesql = "SELECT * FROM %s WHERE %s = '%s' and %s = '%s'" % (TABLE_MARKET_DAILY,MARKET_DATE,end_date,MARKET_STOCK_ID,stock_id)
+		cur.execute(pricesql)
+		results = cur.fetchone()
+		end_price = results[MARKET_PRICE]
+		sql = "SELECT * FROM %s WHERE %s = '%s' and %s = '%s' and %s >= '%s' and %s <= '%s'" \
+		% (TABLE_WEIPAN_SHOW,WEIPAN_SHOW_STOCK_ID,stock_id,WEIPAN_SHOW_DATE,end_date,\
+			WEIPAN_SHOW_TIME,end_date+' 09:29:00',WEIPAN_SHOW_TIME,end_date+' 15:00:00')
 		df = pd.read_sql(sql,conn)
-		timelist = sorted(list(set(df[WEIPAN_SHOW_TIME])))
+		tlist = sorted(list(set(df[WEIPAN_SHOW_TIME])))
+		timelist = [i for i in tlist if int(i.split(':')[-1]) == 0 and (i.split()[1] <= '11:30:00' or i.split()[1] >= '13:00:00')]
 		dfself = df[df[WEIPAN_SHOW_IFSELF] == 1]
 		dfother = df[df[WEIPAN_SHOW_IFSELF] == 0]
 		industryprice = []
@@ -509,13 +517,13 @@ def manipulatePrice(id):   #获取本次操作期间的股价和收益率
 		industry_ratio = []
 		ratio = []
 		D_value = []
-		# for num in range(1,len(price)):
-		# 	a = (industryprice[num] - industryprice[num - 1]) / industryprice[num - 1]   #同行业收益率
-		# 	b = (price[num] - price[num - 1]) / price[num - 1]   #本股票收益率
-		# 	industry_ratio.append(a)
-		# 	ratio.append(b)
-		# 	D_value.append(b - a)   #差值绝对值
-		result = {'date':timelist[1:],'industry_price':industryprice[1:],'price':price[1:],'industry_ratio':industry_ratio,'ratio':ratio,'D_value':D_value}
+		for num in range(1,len(price)):
+			#a = (industryprice[num] - industryprice[num - 1]) / industryprice[num - 1]   #同行业收益率
+			b = (end_price - price[num]) / price[num]   #本股票收益率
+			#industry_ratio.append(a)
+			ratio.append(b)
+			#D_value.append(b - a)   #差值绝对值
+		result = {'date':[i.split()[1] for i in timelist][1:],'industry_price':industryprice[1:],'price':price[1:],'industry_ratio':industry_ratio,'ratio':ratio,'D_value':D_value}
 		return result
 
 
@@ -563,17 +571,21 @@ def manipulateTrading(id):
 		result = {'date':datelist,'volume':volumelist,'amt':amtlist}
 		return result
 	else:
-		sql = "SELECT * FROM %s WHERE %s = '%s' and %s = '%s'" % (TABLE_WEIPAN_SHOW,WEIPAN_SHOW_STOCK_ID,stock_id,WEIPAN_SHOW_DATE,end_date)
+		sql = "SELECT * FROM %s WHERE %s = '%s' and %s = '%s' and %s >= '%s' and %s <= '%s'" \
+		% (TABLE_WEIPAN_SHOW,WEIPAN_SHOW_STOCK_ID,stock_id,WEIPAN_SHOW_DATE,end_date,\
+			WEIPAN_SHOW_TIME,end_date+' 09:29:00',WEIPAN_SHOW_TIME,end_date+' 15:00:00')
 		df = pd.read_sql(sql,conn)
-		timelist = sorted(list(set(df[WEIPAN_SHOW_TIME])))
+
+		tlist = sorted(list(set(df[WEIPAN_SHOW_TIME])))
+		timelist = [i for i in tlist if int(i.split(':')[-1]) == 0 and (i.split()[1] <= '11:30:00' or i.split()[1] >= '13:00:00')]
 		dfself = df[df[WEIPAN_SHOW_IFSELF] == 1]
 		dfother = df[df[WEIPAN_SHOW_IFSELF] == 0]
 		volumelist = []
 		amtlist = []
 		for time in timelist:
-			volumelist.append(dfother[dfother[WEIPAN_SHOW_TIME] == time].iloc[0][WEIPAN_SHOW_VOLUME])
+			volumelist.append(dfself[dfself[WEIPAN_SHOW_TIME] == time].iloc[0][WEIPAN_SHOW_VOLUME])
 			amtlist.append(dfself[dfself[WEIPAN_SHOW_TIME] == time].iloc[0][WEIPAN_SHOW_AMT])
-		result = {'date':datelist,'volume':volumelist,'amt':amtlist}
+		result = {'date':[i.split()[1] for i in timelist],'volume':volumelist,'amt':amtlist}
 		return result
 
 def manipulateProfit(id):
@@ -813,7 +825,7 @@ def manipulateCredit(id):
 	stock = get_stock(id)
 	stock_id = stock[DAY_STOCK_ID]
 	end_date = stock[DAY_END_DATE]
-	# end_date = '2018-05-27'
+	#end_date = '2018-05-27'
 	sql = "SELECT * FROM %s WHERE %s = '%s' and %s <= '%s' ORDER BY %s DESC" % (TABLE_PUNISH,PUNISH_STOCK_ID,stock_id,PUNISH_PUNISH_TIME,end_date,PUNISH_PUNISH_TIME)
 	cur.execute(sql)
 	results = cur.fetchall()
@@ -968,7 +980,7 @@ def hotspotWordcloud(id,source):
 		result = sorted(result, key= lambda x:(x['value']), reverse=True)[:100]
 		return result
 	else:
-		return {}
+		return []
 
 def homepageWordcloud():
 	# result = []

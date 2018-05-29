@@ -82,7 +82,7 @@ def ajax_get_attention():
     top_count = request.args.get('top_count', SOCIAL_DEFAULT_COUNT)
     uid = str(uid)
     top_count = int(top_count)
-    print uid
+    # print uid
     results = search_yangshi_attention(uid, top_count)
     if not results:
         results = {}
@@ -103,7 +103,7 @@ def ajax_mention():
         now_ts = time.time()
     else:
         now_ts = test_time
-        print test_time
+        # print test_time
     results = search_mention(now_ts, uid, top_count)
 
     return json.dumps(results)
@@ -168,7 +168,7 @@ def ajax_attention():
     top_count = request.args.get('top_count', SOCIAL_DEFAULT_COUNT)
     uid = str(uid)
     top_count = int(top_count)
-    print uid
+    # print uid
     results = search_attention(uid, top_count)
     if not results:
         results = {}

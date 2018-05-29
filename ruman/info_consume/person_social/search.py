@@ -81,7 +81,7 @@ def search_follower(uid, top_count):
             bci_history_result = es_bci_history.mget(index=bci_history_index_name, doc_type=bci_history_index_type, body={'ids':uid_list}, fields=fields)['docs']    
         except:
             bci_history_result = []
-        # print bci_history_result
+        # # print bci_history_result
         iter_count = 0
         out_portrait_list = []
         for out_user_item in user_result:
@@ -117,9 +117,9 @@ def search_follower(uid, top_count):
                 user_friendsnum = ''
                 influence = ''
             #retweet_count = int(retweet_dict[uid])
-            print uid
+            # print uid
             count = retweet_dict[uid]
-            print count
+            # print count
             out_portrait_list.append({'uid':uid,'photo_url':photo_url,'count':count,'uname':uname,'influence':influence,'fansnum':fansnum, 'friendsnum':user_friendsnum,'weibo_count':user_weibo_count})#location,
             iter_count += 1
         return out_portrait_list
@@ -208,7 +208,7 @@ def search_yangshi_follower(uid, top_count):
         retweet_result = es_retweet.get(index=index_name, doc_type=be_retweet_index_type, id=uid)['_source']
     except:
         return None
-    # print retweet_result
+    # # print retweet_result
     if retweet_result:
         retweet_dict = json.loads(retweet_result['uid_be_retweet'])
         sorted_list = sorted(retweet_dict.iteritems(),key=lambda x:x[1],reverse=True)[:20]
@@ -250,7 +250,7 @@ def search_yangshi_attention(uid, top_count):
     db_number = get_db_num(now_ts)
     index_name = retweet_index_name_pre + str(db_number)
     center_uid = uid
-    # print es_retweet,index_name,retweet_index_type,uid
+    # # print es_retweet,index_name,retweet_index_type,uid
     try:
         retweet_result = es_retweet.get(index=index_name, doc_type=retweet_index_type, id=uid)['_source']
     except:
@@ -313,7 +313,7 @@ def search_mention(now_ts, uid, top_count):
             except:
                 stat_results[at_uname] = result_dict[at_uname]
     sort_stat_results = sorted(stat_results.items(), key=lambda x:x[1], reverse=True)
-    # print sort_stat_results
+    # # print sort_stat_results
 
     out_portrait_list = []
     out_list = stat_results.keys()
@@ -384,7 +384,7 @@ def search_mention(now_ts, uid, top_count):
         #new_out_portrait_list.append(new_out_portrait_item)
         new_out_portrait_list.append(append_dict)
         iter_count += 1
-        #print append_dict
+        ## print append_dict
     return new_out_portrait_list  #  uid，名字，提及次数,粉丝数，注册地，关注数，微博数
 
 
@@ -399,7 +399,7 @@ def search_be_comment(uid, top_count):
     now_ts = time.time()
     db_number = get_db_num(now_ts)
     index_name = be_comment_index_name_pre + str(db_number)
-    # print es_comment
+    # # print es_comment
     return search_user_info(es_comment,index_name,be_comment_index_type,uid,'uid_be_comment')
 
 
@@ -506,7 +506,7 @@ def search_bidirect_interaction(uid, top_count):
     sort_all_interaction_dict = sorted(all_interaction_dict.items(), key=lambda x:x[1], reverse=True)
     #get in_portrait_list, in_portrait_results and out_portrait_list
     all_interaction_uid_list = [item[0] for item in sort_all_interaction_dict]
-    #print all_interaction_uid_list
+    ## print all_interaction_uid_list
 
     # if RUN_TYPE == 0:
         # all_interaction_dict = {'2029036025':3,'1282005885':2,'2549228714':2,'1809833450':1}
@@ -546,7 +546,7 @@ def search_bidirect_interaction(uid, top_count):
             bci_history_item = bci_history_result[iter_count]
         except:
             bci_history_item = {'found': False}
-        # print bci_history_item
+        # # print bci_history_item
         if bci_history_item['found'] == True:
             fansnum = bci_history_item['fields'][fields[0]][0]
             user_weibo_count = bci_history_item['fields'][fields[1]][0]
@@ -590,7 +590,7 @@ def union_dict(*objs):
     _total = {}
     for _key in _keys:
         _total[_key] = sum([int(obj.get(_key, 0)) for obj in objs])
-    #print '_total:', _total
+    ## print '_total:', _total
     return _total
 
 
@@ -605,7 +605,7 @@ def search_portrait(condition_num, query, sort, size):
                     body={'query':{'bool':{'must':query}}, 'sort':[{sort:{'order':'desc'}}], 'size':size})['hits']['hits']
         #except Exception,e:
         #    raise e
-        #print 'result:', result
+        ## print 'result:', result
     else:
         try:
             result = es_user_portrait.search(index=index_name, doc_type=index_type, \
@@ -655,7 +655,7 @@ def search_user_info(es,index_name,doc_type,uid,result_name):
             bci_history_result = es_bci_history.mget(index=bci_history_index_name, doc_type=bci_history_index_type, body={'ids':uid_list}, fields=fields)['docs']    
         except:
             bci_history_result = []
-        #print bci_history_result
+        ## print bci_history_result
         iter_count = 0
         out_portrait_list = []
         for out_user_item in user_result:
@@ -723,10 +723,10 @@ def search_weibo(root_uid,uid,mtype):
 
     if len(results) > 0:
         for result in results:
-            #print type(result),result
+            ## print type(result),result
             weibo['last_text'] = [result['_source']['text'],result['_source']['text'],result['_source']['timestamp']]
             mid = result['_source']['root_mid']
-            # print mid
+            # # print mid
             len_pre = len(flow_text_index_name_pre)
             index = result['_index'][len_pre:]
             root_index = []
@@ -752,10 +752,10 @@ def search_fans_new(uid,top_count):
     fan_result_new = json.loads(fan_result_new['uid_be_retweet'])
 
     out_portrait_list=[]
-    # print fan_result_new
+    # # print fan_result_new
     i=1
     for key in fan_result_new:
-        # print key
+        # # print key
         fansnum=0
         user_friendsnum=0
         user_weibo_count=0
@@ -821,7 +821,7 @@ def search_fans(uid,top_count):
         be_retweet_uid_dict = json.loads(be_retweet_result['uid_be_retweet'])
     else:
         be_retweet_uid_dict = {}
-    # print "be_retweet_uid_dict", be_retweet_uid_dict
+    # # print "be_retweet_uid_dict", be_retweet_uid_dict
     try:
         be_comment_result = es_be_comment.get(index=be_comment_index_name, doc_type=be_comment_index_type, id=uid)['_source']
     except:
@@ -831,12 +831,12 @@ def search_fans(uid,top_count):
         be_comment_uid_dict = json.loads(be_comment_result['uid_be_comment'])
     else:
         be_comment_uid_dict = {}
-    # print "be_comment_uid_dict", be_comment_uid_dict
+    # # print "be_comment_uid_dict", be_comment_uid_dict
 
     fans_result = union_dict(be_retweet_uid_dict,be_comment_uid_dict)
     fans_user_set = set(fans_result.keys())
     fans_list = list(fans_user_set)
-    # print "fans_list", fans_list
+    # # print "fans_list", fans_list
     all_fans_dict = {}
 
     for fans_user in fans_list:
@@ -852,7 +852,7 @@ def search_fans(uid,top_count):
         all_fans_uid_list.append(i)
         if count == 1000:
             break
-    # print all_fans_uid_list
+    # # print all_fans_uid_list
 
     out_portrait_list = all_fans_uid_list
     #use to get user information from user profile
@@ -888,7 +888,7 @@ def search_fans(uid,top_count):
             bci_history_item = bci_history_result[iter_count]
         except:
             bci_history_item = {'found': False}
-        # print bci_history_item
+        # # print bci_history_item
         if bci_history_item['found'] == True:
             fansnum = bci_history_item['fields'][fields[0]][0]
             user_weibo_count = bci_history_item['fields'][fields[1]][0]
@@ -913,15 +913,15 @@ if __name__=='__main__':
     #result = get_evaluate_max()
     
     results1 = search_attention(uid)
-    # print 'attention:', results1
+    # # print 'attention:', results1
     '''
     results2 = search_follower(uid)
-    print 'follow:', results2
+    # print 'follow:', results2
     results3 = search_mention(now_ts, uid)
-    print 'at_user:', results3 
+    # print 'at_user:', results3 
     results4 = search_location(now_ts, uid)
-    print 'location:', results4
+    # print 'location:', results4
     results5 = search_activity(now_ts, uid)
-    print 'activity:', results5
+    # print 'activity:', results5
     '''
     

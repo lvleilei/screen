@@ -25,7 +25,7 @@ def networkdata():
     f = open('/home/ubuntu2/yuanhuiru/info_consume/user_portrait/user_portrait/info_consume/topic_network_analyze/networkdata.min10.json','r')
     a = f.readlines()
     results = a[0]
-    print json.loads(results),type(results)
+    # print json.loads(results),type(results)
     return results
 
 @mod.route('/get_gexf/')
@@ -38,7 +38,7 @@ def GetGexf():
     date = ts2datetime(end_ts)
     windowsize = (end_ts - start_ts) / Day # 确定时间跨度的大小
     raw_data = get_gexf(topic, date, windowsize)
-    print type(raw_data),len(raw_data)
+    # print type(raw_data),len(raw_data)
     G=nx.Graph()
     results,G = gexf_process(raw_data)
     global dictG
@@ -91,7 +91,7 @@ def GetPusherWeibosByts():
     topic =request.args.get('topic', '')
     if MYSQL_TOPIC_LEN == 0:
         topic = topic[:20]
-    print topic
+    # print topic
     end_ts = request.args.get('end_ts', '')     #''代表默认值为空
     end_ts = long(end_ts)
     start_ts = request.args.get('start_ts', '')
@@ -134,7 +134,7 @@ def pusher_weibos_byhot():
     topic =request.args.get('topic', '')
     if MYSQL_TOPIC_LEN == 0:
         topic = topic[:20]
-    print topic
+    # print topic
     end_ts = request.args.get('end_ts', '')     #''代表默认值为空
     end_ts = long(end_ts)
     start_ts = request.args.get('start_ts', '')

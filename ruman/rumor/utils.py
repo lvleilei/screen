@@ -81,6 +81,7 @@ def search_rumor():
         for hotweibo in hotspotweibo:
             result.append(hotweibo['_source'])
     result = sorted(result,key= lambda x:(x['timestamp']),reverse=True)
+    result = sorted(result,key= lambda x:(x['comment']),reverse=True)
     return json.dumps(result)
 
 def rumorWarning():
@@ -251,19 +252,22 @@ def get_rumor_pusher_maker(en_name):
         else:
             uid_dict[uid] = [retweeted,message,fans]
 
-    retweeted_uid_dict = sorted(uid_dict.iteritems(), key=lambda d:d[0], reverse = True)
-    message_uid_dict = sorted(uid_dict.iteritems(), key=lambda d:d[1], reverse = True)
+    retweeted_uid_dict = sorted(uid_dict.iteritems(), key=lambda d:d[0][1], reverse = True)
+    message_uid_dict = sorted(uid_dict.iteritems(), key=lambda d:d[0][2], reverse = True)
+    
     
     retweeted_list=[]
     message_list=[]
     for i in range(0,10):
         # print retweeted_uid_dict[i]
-        retweeted_list.append([retweeted_uid_dict[i][0],i+1,retweeted_uid_dict[i][1][2]])
+        retweeted_list.append([retweeted_uid_dict[i][0],i+1,retweeted_uid_dict[i][1][1]])
         message_list.append([message_uid_dict[i][0],i+1,message_uid_dict[i][1][2]])
 
     result={}
     result['maker'] = message_list
     result['pusher'] = retweeted_list
+    
+
     return result
 
 def get_rumor_source(en_name):

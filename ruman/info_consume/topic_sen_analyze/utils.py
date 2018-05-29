@@ -63,6 +63,7 @@ def get_sen_time_count(topic,start_ts,end_ts,unit=MinInterval):#按时间趋势�
                         count[end_ts][sen] += str(item[1])
                     except:
                         count[end_ts][sen] = str(item[1])
+    db.session.close()
     return count #{1468947600L: {0L: Decimal('82'), 1L: Decimal('8')}, 1468949400L: {0L: Decimal('57'), 1L: Decimal('7'), 2L: Decimal('1'), 6L: Decimal('1')}}
 
 
@@ -143,6 +144,7 @@ def get_sen_province_count(topic,start_ts,end_ts,unit=MinInterval): #省市的�
         results.append({sen:sorted(counts.iteritems(),key=lambda x:x[1]['total'],reverse=True)})
     #results = sorted(count_dict.iteritems(),key=lambda x:x[1].values()[0]['total'],reverse=True)
     #print results
+    db.session.close()
     return results
 
 def get_weibo_content(topic,start_ts,end_ts,sort_item='timestamp',sen=0):
@@ -183,6 +185,7 @@ def get_weibo_content(topic,start_ts,end_ts,sort_item='timestamp',sen=0):
 
     results = sorted(weibo_dict.items(),key=lambda x:x[1][sort_item],reverse=True)
     #print results
+    db.session.close()
     return results
 
 

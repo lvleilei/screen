@@ -70,8 +70,8 @@ def delete_uid_file(filename):
 
 #submit new task and identify the task name unique in es-group_result and save it to redis list
 def submit_task(input_data):
-    print 'aaaaaaaaaaaaaaa'
-    print input_data
+    # print 'aaaaaaaaaaaaaaa'
+    # print input_data
     status = 0 # mark it can not submit
     task_name = input_data['task_name']
     submit_user = input_data['submit_user']
@@ -95,7 +95,7 @@ def submit_task(input_data):
             }
         }
     }
-    print es_group_result,group_index_name,group_index_type
+    # print es_group_result,group_index_name,group_index_type
     exist_compute_result = es_group_result.search(index=group_index_name, doc_type=group_index_type, body=query_body)['hits']['hits']
     exist_compute_count = len(exist_compute_result)
     if exist_compute_count >= task_max_count:
@@ -122,7 +122,7 @@ def submit_task(input_data):
         #print es_group_result,group_index_name,group_index_type
         r.lpush(group_analysis_queue_name, json.dumps(input_data))
         #print status
-    print status
+    # print status
     return status
 
 #search task by some condition -whether add download
@@ -759,7 +759,7 @@ def delete_group_results(task_name, submit_user):
             action = {'update':{'_id': uid}}
             bulk_action.extend([action, {'doc': {'group': new_group_tag}}])
     if bulk_action:
-        print 'bulk_action:', bulk_action
+        # print 'bulk_action:', bulk_action
         es_user_portrait.bulk(bulk_action, index=portrait_index_name, doc_type=portrait_index_type)
     #step3: delete group results in group_manage
     try:
@@ -1073,15 +1073,15 @@ def get_sort(uid,fe):
         }
     }
     result['in_top'] = es.search(index=BCI_INDEX_NAME, doc_type=BCI_INDEX_TYPE,body=query_body)['hits']['total']
-    print 'essearch'
-    print es.search(index=BCI_INDEX_NAME, doc_type=BCI_INDEX_TYPE,body=query_body)
+    # print 'essearch'
+    # print es.search(index=BCI_INDEX_NAME, doc_type=BCI_INDEX_TYPE,body=query_body)
 
     try:
         u_bci = es.get(index='bci_history', doc_type='bci', id=uid,fields=['bci_week_ave'])['fields']['bci_week_ave'][0]
         #u_bci = es.get(index='user_portrait_1222', doc_type='user', id=uid,fields=['bci_week_ave'])['fields']['bci_week_ave'][0]        
-        print "trymax"
+        # print "trymax"
         bci_max = get_max_value(es_user_profile, "bci_history", "bci")
-        print "max",bci_max
+        # print "max",bci_max
         result['all_score'] = math.log(u_bci/float(bci_max)*9+1,10)*100 
     except:
         result['all_score']=""

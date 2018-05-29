@@ -21,7 +21,7 @@ def sen_time_count():
     topic = request.args.get('topic','')
     if MYSQL_TOPIC_LEN == 0:
         topic = topic[:20]
-    print '24',topic
+    # print '24',topic
     during = request.args.get('pointInterval',60*60) # 默认查询时间粒度为3600秒
     during = int(during)
     end_ts = request.args.get('end_ts', '')
@@ -32,7 +32,7 @@ def sen_time_count():
     results = []
     #weibo_count = all_weibo_count(topic,start_ts,end_ts)
     time_count = get_sen_time_count(topic,start_ts,end_ts,during)
-    print type(time_count)
+    # print type(time_count)
     return json.dumps(time_count)
 
 @mod.route('/sen_weibo_content/')

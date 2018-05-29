@@ -366,7 +366,7 @@
             echarts: '/static/js/echarts-2/build/dist',
         }
     });
-    function keywords() {
+    // function keywords() {
         // for(var i=0;i<data.length;i++){
         //     data[i].itemStyle = createRandomItemStyle();
         // }
@@ -395,6 +395,7 @@
                     for(var i=0;i<data.length;i++){
                         data[i].itemStyle = createRandomItemStyle();
                     }
+                    // var testData = [];
                     var option = {
                         title: {
                             text: '',
@@ -501,12 +502,14 @@
                                     },
                                 ]
                                  */
+                            // data:testData
                             data:data
                         }]
                     };
+                    console.log(option);
 
                     wordCloud_myChart.hideLoading();
-                    wordCloud_myChart.setOption(option);
+                    wordCloud_myChart.clear().setOption(option);
                 }
 
                 // myChart.setOption(option);
@@ -520,8 +523,8 @@
                 })
             }
         );
-    }
-    keywords();
+    // }
+    // keywords();
 
 
 

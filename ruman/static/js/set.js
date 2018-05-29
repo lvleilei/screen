@@ -135,7 +135,9 @@
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
                         var increase_ratio = '';
-                        if (row.increase_ratio==''||row.increase_ratio=='null'||row.increase_ratio=='unknown'||!row.increase_ratio){
+                        if(row.increase_ratio === 0){
+                            return '0%';
+                        }else if (row.increase_ratio=='null'||row.increase_ratio=='unknown'){
                             increase_ratio =  '未知';
                         }else {
                             increase_ratio =  row.increase_ratio;
@@ -187,6 +189,10 @@
             public_ajax.call_request('get',rumantext_url,rumantext);
             function rumantext(data){
                 $('#False_message p.False_content').empty().text(data.text);
+                $('#False_message p.False_info .isType-1').text(data.ifrumor);
+                $('#False_message p.False_info .isType-2').text(data.publish_time);
+                $('#False_message p.False_info .isType-3').text(data.author);
+                $('#False_message p.False_info .isType-4').text(data.source);
             }
 
         // 舆情分析

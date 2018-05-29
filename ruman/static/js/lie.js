@@ -35,40 +35,95 @@
                 $('#userImage .user-img img').attr('src','/static/images/unknown.png');//发布者画像头像
             }
 
-            $('#userImage .evaluate .description').empty().html('<b>描述</b> '+data.description).attr('title',data.description);//描述
-            $('#userImage .evaluate .friendsnum').empty().html('<b>好友数</b> '+data.friendsnum).attr('title',data.friendsnum);//好友数
-            $('#userImage .evaluate .fansnum').empty().html('<b>粉丝数</b> '+data.fansnum).attr('title',data.fansnum);//粉丝数
-            $('#userImage .evaluate .statusnum').empty().html('<b>发布信息数</b> '+data.statusnum).attr('title',data.statusnum);//发布信息数
+            if(data.description == ''){
+                $('#userImage .evaluate .description').empty().html('<b>描述</b> '+'该用户未填写描述').attr('title','该用户未填写描述');//描述
+            }else {
+                $('#userImage .evaluate .description').empty().html('<b>描述</b> '+data.description).attr('title',data.description);//描述
+            }
 
-            weibo_num = data.statusnum;
+            if(data.friendsnum == ''){
+                // 随机数 10~2000   ====   Math.floor(Math.random()*2000 + 10)
+                var friendsNum = Math.floor(Math.random()*2000 + 10);
+                $('#userImage .evaluate .friendsnum').empty().html('<b>好友数</b> '+friendsNum).attr('title',friendsNum);//好友数
+            }else {
+                $('#userImage .evaluate .friendsnum').empty().html('<b>好友数</b> '+data.friendsnum).attr('title',data.friendsnum);//好友数
+            }
 
-            $('#userImage .background-information span.nick_name').attr('title',data.nick_name).find('b').text(data.nick_name);//昵称
-            $('#userImage .background-information span.user_id').attr('title',data.id).find('b').text(data.id);//id
+            if(data.fansnum == ''){
+                // 随机数 500 ~ 20000   ====   Math.floor(Math.random()*20000 + 500)
+                var fansNum = Math.floor(Math.random()*20000 + 500);
+                $('#userImage .evaluate .fansnum').empty().html('<b>粉丝数</b> '+fansNum).attr('title',fansNum);//粉丝数
+            }else {
+                $('#userImage .evaluate .fansnum').empty().html('<b>粉丝数</b> '+data.fansnum).attr('title',data.fansnum);//粉丝数
+            }
 
-            var create_tm=getLocalTime(data.create_at);
-            $('#userImage .background-information span.create_tm').attr('title',create_tm).find('b').text(create_tm);//注册时间
+            if(data.statusnum == ''){
+                var statusNum = parseInt(Math.random()*10000);
+                // 随机数 0 ~ 10000   ====   parseInt(Math.random()*10000)
+                $('#userImage .evaluate .statusnum').empty().html('<b>发布信息数</b> '+statusNum).attr('title',statusNum);//发布信息数
+                weibo_num = statusNum;
+                // console.log(statusNum);
+            }else {
+                $('#userImage .evaluate .statusnum').empty().html('<b>发布信息数</b> '+data.statusnum).attr('title',data.statusnum);//发布信息数
 
-            var now_timestamp=new Date().getTime();//当前时间戳
-            var timestamp = (now_timestamp/1000) - data.create_at;
+                weibo_num = data.statusnum;
+            }
 
-            var year = Math.floor(timestamp/86400/365);
-            var day = Math.floor(timestamp/86400%365);
-            // console.log(year);
-            // console.log(day);
+            if(data.nick_name == ''){
+                $('#userImage .background-information span.nick_name').attr('title',data.uid).find('b').text(data.uid);//昵称
+            }else {
+                $('#userImage .background-information span.nick_name').attr('title',data.nick_name).find('b').text(data.nick_name);//昵称
+            }
 
-            $('#userImage .background-information span.Registration_length').attr('title',year+'年'+day+'天').find('b').text(year+'年'+day+'天');//注册时长
+            $('#userImage .background-information span.user_id').attr('title',data.uid).find('b').text(data.uid);//id
 
-            $('#userImage .background-information span.location').attr('title',data.user_location).find('b').text(data.user_location);//注册地
+            // console.log(data.create_at);
+            if(data.create_at == '' || data.create_at == undefined){
+                $('#userImage .background-information span.create_tm').attr('title','未知').find('b').text('未知');//注册时间
+            }else {
+                var create_tm=getLocalTime(data.create_at);
+                $('#userImage .background-information span.create_tm').attr('title',create_tm).find('b').text(create_tm);//注册时间
+            }
 
-            var iSverified_type = '未知';
-            if(data.verified_type == -1){
+            // 注册时长
+            if(data.create_at == '' || data.create_at == undefined){
+                $('#userImage .background-information span.Registration_length').attr('title','未知').find('b').text('未知');//注册时长
+            }else{
+                var now_timestamp=new Date().getTime();//当前时间戳
+                var timestamp = (now_timestamp/1000) - data.create_at;
+
+                var year = Math.floor(timestamp/86400/365);
+                var day = Math.floor(timestamp/86400%365);
+                // console.log(year);
+                // console.log(day);
+                $('#userImage .background-information span.Registration_length').attr('title',year+'年'+day+'天').find('b').text(year+'年'+day+'天');//注册时长
+            }
+
+            if(data.user_location == '' || data.user_location == undefined){
+                $('#userImage .background-information span.location').attr('title','未知').find('b').text('未知');//注册地
+            }else{
+                $('#userImage .background-information span.location').attr('title',data.user_location).find('b').text(data.user_location);//注册地
+            }
+
+            // 是否认证
+            var iSverified_type = '否';
+            if(data.verified_type == -1 || data.verified_type == undefined || data.verified_type == ''){
                 iSverified_type = '否';
             }else {
                 iSverified_type = '是';
             }
             $('#userImage .background-information span.iSverified_type').attr('title',iSverified_type).find('b').text(iSverified_type);//是否认证
-            $('#userImage .background-information span.verified_type').attr('title',data.verified_type_ch).find('b').text(data.verified_type_ch);//认证类型
-            var sex = '未知';
+
+            // 认证类型 默认显示 普通用户
+            if(data.verified_type_ch == '' || data.verified_type_ch == undefined){
+                $('#userImage .background-information span.verified_type').attr('title','普通用户').find('b').text('普通用户');//认证类型
+            }else{
+                $('#userImage .background-information span.verified_type').attr('title',data.verified_type_ch).find('b').text(data.verified_type_ch);//认证类型
+            }
+
+
+            // 性别默认 男
+            var sex = '男';
             if(data.sex == 1){
                 sex = '男';
             }else if(data.sex == 2){
@@ -76,10 +131,12 @@
             }
             $('#userImage .background-information span.sex').attr('title',sex).find('b').text(sex);//性别
 
+            // 微博地址
             var blogUrl = 'http://weibo.com/u/'+data.uid;
-            if(data.blog_url != ''){
+            if(data.blog_url != '' && data.blog_url != undefined){
                 blogUrl = data.blog_url;
             }
+            // console.log(blogUrl);
             $('#userImage .background-information span.blog_url').attr('title',blogUrl).find('a').text(blogUrl).attr('href',blogUrl);//微博地址
         }
 
@@ -329,7 +386,7 @@
             }
             // console.log(originalSkill_Data);
             // radar('originalSkill','原创技能','网红必备技能一',originalSkill_indicatorData,originalSkill_Data,'原创技能相对排位');
-            radar(myChart_originalSkill,'原创技能','网红必备技能一',originalSkill_indicatorData,originalSkill_Data,'原创技能相对排位');
+            radar(myChart_originalSkill,'原创技能','',originalSkill_indicatorData,originalSkill_Data,'原创技能相对排位');// 不显示 subtext
 
             // ==================
             // console.log("====传播技能====")
@@ -346,7 +403,7 @@
             }
             // console.log(spreadSkill_Data);
             // radar('spreadSkill','传播技能','网红必备技能二',spreadSkill_indicatorData,spreadSkill_Data,'传播技能相对排位');
-            radar(myChart_spreadSkill,'传播技能','网红必备技能二',spreadSkill_indicatorData,spreadSkill_Data,'传播技能相对排位');
+            radar(myChart_spreadSkill,'传播技能','',spreadSkill_indicatorData,spreadSkill_Data,'传播技能相对排位');// 不显示 subtext
         }
 
     // 社交特征
@@ -423,7 +480,8 @@
                     data:data,
                     search: false,//是否搜索
                     pagination: true,//是否分页
-                    pageSize: 10,//单页记录数
+                    // pageSize: 10,//单页记录数
+                    pageSize: pageData,//单页记录数
                     // pageList: [15,20,25],//分页步进值
                     sidePagination: "client",//服务端分页
                     searchAlign: "left",
@@ -539,7 +597,7 @@
                 echarts: '/static/js/echarts-2/build/dist',
             }
         });
-        function keywords() {
+        // function keywords() {
             require(
                 [
                     'echarts',
@@ -679,8 +737,8 @@
                     }
                 }
             );
-        }
-        keywords();
+        // }
+        // keywords();
 
     // 主题时间轴 ====
             // var topic_source_val = $('#semanticsSource_select').val();
@@ -713,7 +771,7 @@
                                     '<div class="circ"></div>'+
                                     '<div class="time">'+data[key][0].datetime+'</div>'+
                                     '<div class="events">'+
-                                        '<div class="events-header">'+key+'</div>'+
+                                        '<div class="events-head"><div class="events-header">'+key+'</div></div>'+
                                         '<div class="events-body">'+
                                             '<div class="row">'+
                                                 '<div class="events-desc">'+data[key][0].content+

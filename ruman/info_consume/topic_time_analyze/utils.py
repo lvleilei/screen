@@ -70,7 +70,7 @@ def get_weibo_by_time(topic,start_ts,end_ts,sort_item='timestamp'):
         
 
 def get_weibo_by_time(topic,start_ts,end_ts,sort_item='timestamp'):
-    print topic,start_ts,end_ts,weibo_es
+    # print topic,start_ts,end_ts,weibo_es
     query_body = {
         'query':{
             'bool':{
@@ -151,8 +151,8 @@ def mtype_count(topic,start_ts,end_ts,mtype,unit=MinInterval):
         #                                                 PropagateCount.mtype==mtype).all()
         items = db.session.query(PropagateCount).filter(PropagateCount.topic==topic).all()
         #print 'I choose method 2'
-    print "mysql"
-    print items
+    # print "mysql"
+    # print items
     data = {}
     for item in items:
         mtype = item.mtype
@@ -163,7 +163,8 @@ def mtype_count(topic,start_ts,end_ts,mtype,unit=MinInterval):
             data[str(ts)][str(mtype)] += count
         except:
             data[str(ts)][str(mtype)] = count
-    print data
+    # print data
+    db.session.close()
     return data
           
 
@@ -194,18 +195,19 @@ def get_time_count(topic,start_ts,end_ts,unit=MinInterval):#按时间趋势的�
                 db.session.rollback()
             count[end_ts] = {}
             for item in items:
-                print 'item::::::::',item
+                # print 'item::::::::',item
                 try:
                     count[end_ts][item[0]] += item[1]
                 except:
                     count[end_ts][item[0]] = item[1]
+    db.session.close()
     return count
 
 def get_predict_count(topic,start_ts,end_ts,during):
     task_name = "micro_prediction_" + topic
     start_ts = int(start_ts)
     end_ts = int(end_ts)
-    print start_ts, end_ts, task_name
+    # print start_ts, end_ts, task_name
     query_body = {
         "query":{
             "range":{
@@ -237,7 +239,7 @@ def get_predict_count(topic,start_ts,end_ts,during):
         ts_list.append(ts)
 
     prediction_value_list.insert(0,truth_value_list[0])
-    print len(truth_value_list), len(ts_list), len(prediction_value_list)
+    # print len(truth_value_list), len(ts_list), len(prediction_value_list)
     for i in range(len(ts_list)):
         return_list.append([ts_list[i], truth_value_list[i], prediction_value_list[i]])
           
