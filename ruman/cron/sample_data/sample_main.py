@@ -14,6 +14,8 @@ def get_traceback(sampleid,data):
     sample_data = pd.DataFrame(data)
     selected = sample_data.loc[sample_data['id']==sampleid].fillna('nan')
     selected_dict = selected.to_dict(orient= 'records')
+    for item in selected_dict:
+        item['publish_time'] = str(item['publish_time'])
     selected_dict = sorted(selected_dict,key = lambda x:x['publish_time'])
     return selected_dict
 
@@ -33,6 +35,7 @@ def weibo_fix(weibo_data):
                 weibo_data['id'][index] = int(real_mid)
                 # print type(weibo_data['publish_time'])
                 weibo_data['publish_time'][index] = str(weibo_data['publish_time'][index])
+                
                 break
     # print weibo_data['id']
     return weibo_data
