@@ -7,7 +7,7 @@ import pandas as pd
 from config import *
 from time_utils import *
 from sql_utils import *
-
+import csv
 
 def update_day_result():
     conn = default_db()
@@ -74,7 +74,7 @@ def update_day_label():
 def delete_day_type():
     conn = default_db()
     cur = conn.cursor()
-    sql = "SELECT * FROM %s WHERE %s = '%d'" % (TABLE_DAY,DAY_MANIPULATE_TYPE,2)
+    sql = "SELECT * FROM %s WHERE %s = '%d'" % (TABLE_DAY,DAY_MANIPULATE_TYPE,1)
     cur.execute(sql)
     results = cur.fetchall()
     num = len(results)
@@ -100,7 +100,7 @@ def increaseratio(lastday,nowday,stock_id):
         increase_ratio = 0
     return increase_ratio
 
-def insert_sql(df):
+def insert_sql(df,manipulate_type,label):
     conn = default_db()
     cur = conn.cursor()
     for num in range(len(df)):
@@ -115,13 +115,12 @@ def insert_sql(df):
 
         increase_ratio = increaseratio(lastdate,end_date,stock_id)
         industry_name = result[STOCK_LIST_INDUSTRY_NAME]
-        manipulate_type = 2
         ifend = 1
         marketplate = result[STOCK_LIST_PLATE]
         industry_code = result[STOCK_LIST_INDUSTRY_CODE]
         print stock_name,stock_id,start_date,end_date,industry_name,increase_ratio,manipulate_type,ifend,marketplate,industry_code
         order = 'insert into ' + TABLE_DAY + '(stock_name,stock_id,manipulate_label,ifpunish,start_date,end_date,increase_ratio,industry_name,manipulate_type,industry_code,ifend,market_plate,ifshow)values\
-        ("%s","%s","%d","%d","%s","%s","%f","%s","%d","%s","%d","%s","%d")' % (stock_name,stock_id,1,1,start_date,end_date,increase_ratio,industry_name,manipulate_type,industry_code,ifend,marketplate,1)
+        ("%s","%s","%d","%d","%s","%s","%f","%s","%d","%s","%d","%s","%d")' % (stock_name,stock_id,1,1,start_date,end_date,increase_ratio,industry_name,manipulate_type,industry_code,ifend,marketplate,label)
         try:
             cur.execute(order)
             conn.commit()
@@ -368,7 +367,8 @@ def delele_trading():
 def delete_nouse_weipan():
     conn = default_db()
     cur = conn.cursor()
-    sql = "SELECT * FROM %s WHERE stock_id = '%s' and date = '%s'" % ('weipan_show','600099','2016-12-23')
+    '''
+    sql = "SELECT * FROM %s WHERE ifself = 0" % ('weipan_show')
     cur.execute(sql)
     results = cur.fetchall()
     num = len(results) 
@@ -378,7 +378,28 @@ def delete_nouse_weipan():
             cur.execute(delete)
             conn.commit()
         except Exception, e:
-            print e
+            print e'''
+    delete = "DELETE FROM %s WHERE %s = %d" % ('weipan_show','ifself',0)
+    try:
+        cur.execute(delete)
+        conn.commit()
+    except Exception, e:
+        print e
+
+def update_day_show():
+    conn = default_db()
+    cur = conn.cursor()
+    update = "UPDATE %s SET %s = '%d' WHERE %s = %d and %s = %d" % (TABLE_DAY,'ifshow',1,'ifshow',0,DAY_MANIPULATE_TYPE,3)
+    try:
+        cur.execute(update)
+        conn.commit()
+    except Exception, e:
+        print e
+
+def read_insert():
+    f = csv.reader(open('weishizhi.csv'))
+    for row in f:
+        print 1
 
 if __name__=="__main__":
     #update_day_label()
@@ -407,4 +428,5 @@ if __name__=="__main__":
     #count()
     #transfer2es('2018-01-01','2018-05-15')
     #update_announce()
-    delete_nouse_weipan()
+    #delete_nouse_weipan()
+    update_day_show()

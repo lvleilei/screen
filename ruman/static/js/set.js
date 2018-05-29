@@ -136,7 +136,7 @@
                     formatter: function (value, row, index) {
                         var increase_ratio = '';
                         if(row.increase_ratio === 0){
-                            return '0%';
+                            increase_ratio = '0%';
                         }else if (row.increase_ratio=='null'||row.increase_ratio=='unknown'){
                             increase_ratio =  '未知';
                         }else {
@@ -323,15 +323,15 @@
                 trigger: 'axis'
             },
             grid: {
-                left: '5%',
+                left: '0%',
                 right: '9%',
-                bottom: '15%',
+                bottom: '0%',
                 top:'17%',
-                // containLabel: true
+                containLabel: true
             },
             legend: {
                 // data:['收盘价（元）','大盘'],
-                data:['收盘价（元）','同行业平均值'],
+                data:[stock,'同行业平均值'],
                 orient:'horizontal',//horizontal
                 // zlevel:99
                 top:'7%',
@@ -380,7 +380,8 @@
             ],
             series: [
                 {
-                    name:'收盘价（元）',
+                    // name:'收盘价（元）',
+                    name: stock,
                     type:'line',
                     // data:[28, 22,34, 44, 55, 43, 32, 47],
                     data: price_data,

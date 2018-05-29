@@ -169,7 +169,7 @@ var industry=['农、林、\n牧、渔业','采掘业','制造业','电力、煤
                     align: "center",//水平
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
-                        return '<span style="cursor:pointer;color:white;" onclick="jumpFrame_1(\''+row.uid+'\',\''+row.en_name+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
+                        return '<span style="cursor:pointer;color:white;" onclick="jumpFrame_1(\''+row.uid+'\',\''+row.en_name+'\',\''+row.mid+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
                     }
                 },
                 {
@@ -189,9 +189,9 @@ var industry=['农、林、\n牧、渔业','采掘业','制造业','电力、煤
     };
     // earlyWarning(earlyWarningdata);
     // 跳转详情页
-    function jumpFrame_1(uid, en_name) {
-        var html='/index/lieDetail/?uid='+uid+'&en_name='+en_name;
-            window.open(html);
+    function jumpFrame_1(uid, en_name, mid) {
+        var html='/index/lieDetail/?uid='+uid+'&en_name='+en_name + '&mid='+mid;
+        window.open(html);
 
     }
 

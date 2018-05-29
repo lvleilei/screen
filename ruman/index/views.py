@@ -13,7 +13,8 @@ from ruman.es import *
 def lieDetail():
 	uid = request.args.get('uid','')
 	en_name = request.args.get('en_name','')
-	return render_template('index/lieDetail.html',uid=uid,en_name=en_name)
+	mid = request.args.get('mid','')
+	return render_template('index/lieDetail.html',uid=uid,en_name=en_name,mid=mid)
 
 @index.route('/setDetail/')
 def setDetail():
