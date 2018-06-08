@@ -368,19 +368,19 @@
             var data = data[0];
 
             // ==================
-            // console.log("====原创技能====")
+            console.log("====原创技能====")
             // ==================
 
-            // console.log(weibo_num/399139, data.origin_weibo_retweeted_total_number/1009130, data.origin_weibo_comment_total_number/241403, data.origin_weibo_comment_brust_average/36345.5, data.origin_weibo_retweeted_brust_average/79278);
-            var radius_1=Math.max(weibo_num/399139, data.origin_weibo_retweeted_total_number/1009130, data.origin_weibo_comment_total_number/241403, data.origin_weibo_comment_brust_average/36345.5, data.origin_weibo_retweeted_brust_average/79278);
+            console.log(weibo_num/399139, data.origin_weibo_retweeted_total_number/1009130, data.origin_weibo_comment_total_number/241403, data.origin_weibo_comment_brust_average/36345.5, data.origin_weibo_retweeted_brust_average/79278);
+            var radius_1=Math.max(data.origin_weibo_number/399139, data.origin_weibo_retweeted_total_number/1009130, data.origin_weibo_comment_total_number/241403, data.origin_weibo_comment_brust_average/36345.5, data.origin_weibo_retweeted_brust_average/79278);
             // console.log(radius_1);
 
             var k=100/radius_1;
-            // console.log(k*weibo_num/399139, k*data.origin_weibo_retweeted_total_number/1009130, k*data.origin_weibo_comment_total_number/241403, k*data.origin_weibo_comment_brust_average/36345.5, k*data.origin_weibo_retweeted_brust_average/79278);
+            console.log(k*weibo_num/399139, k*data.origin_weibo_retweeted_total_number/1009130, k*data.origin_weibo_comment_total_number/241403, k*data.origin_weibo_comment_brust_average/36345.5, k*data.origin_weibo_retweeted_brust_average/79278);
 
             // 原创技能
             var originalSkill_Data = [];
-            originalSkill_Data.push(k*weibo_num/399139+10, k*data.origin_weibo_retweeted_total_number/1009130+20, k*data.origin_weibo_comment_total_number/241403, k*data.origin_weibo_retweeted_brust_average/79278, k*data.origin_weibo_comment_brust_average/36345.5);
+            originalSkill_Data.push(k*data.origin_weibo_number/399139+10, k*data.origin_weibo_retweeted_total_number/1009130+20, k*data.origin_weibo_comment_total_number/241403, k*data.origin_weibo_retweeted_brust_average/79278, k*data.origin_weibo_comment_brust_average/36345.5);
             for(var i=0;i<originalSkill_Data.length;i++){
                 originalSkill_Data[i] = originalSkill_Data[i].toFixed(2);
             }

@@ -437,10 +437,13 @@ def manipulateHistory(id):   #给出该股票的历史操纵数据
 	cur.execute(sql)
 	results = cur.fetchall()
 	resultother = []
+	theday = SHOW_DATE
 	for i in results:
 		dic = {}
 		dic['id'] = i[DAY_ID]
-		if i[DAY_IFEND]:
+
+		if i[DAY_END_DATE] != theday:
+		# if i[DAY_IFEND]: 0605LCR
 			dic['end_date'] = i[DAY_END_DATE]
 			dic['manipulate_state'] = u'已完成操纵'
 		else:

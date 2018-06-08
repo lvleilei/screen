@@ -73,9 +73,13 @@ def search_rumor():
     if results:
         hotspotweibo = results['hits']['hits']
         for hotweibo in hotspotweibo:
-            result.append(hotweibo['_source'])
+            if hotweibo['_source']['mid'] != "4041765180205750":
+                result.append(hotweibo['_source'])
+            else:
+                new_one = hotweibo['_source']
     result = sorted(result,key= lambda x:(x['timestamp']),reverse=True)
-    result = sorted(result,key= lambda x:(x['comment']),reverse=True)
+    result.append(new_one)
+    # result = sorted(result,key= lambda x:(x['comment']),reverse=True)
     return json.dumps(result)
 
 def rumorWarning():
@@ -115,7 +119,9 @@ def rumorWarning():
     return {'weeknum':weeknum,'monthnum':monthnum,'seasonnum':seasonnum}
 
 def rumorMonger(date):
-    theday = '2016-11-26'
+    theday = '2016-11-25'
+    dateago = datetime2ts(theday) - (date)*24*3600
+    '''
     dateago = ts2datetime(datetime2ts(theday) - (date-1)*24*3600)   #要记得少一天
     query_body = {"size":2000,"query":{ "match": {"rumor_label" :1}}}
     hits = []
@@ -124,8 +130,13 @@ def rumorMonger(date):
         int(theday.split('-')[0]),int(theday.split('-')[1]),int(theday.split('-')[2])):
 
         res = weibo_es.search(index=ES_INDEX_CAL_LIST, doc_type=day, body=query_body,request_timeout=100)
-        hits.extend(res['hits']['hits'])
-        
+        hits.extend(res['hits']['hits'])'''
+    query_body = {"size":400,"query":{ "filtered": {
+        "filter":{"range":{"timestamp":{"gte": dateago,"lte":datetime2ts(theday) }}}
+    }}}
+    resrumor = weibo_es.search(index='rumor_sample', body=query_body,doc_type="rumor",request_timeout=100)
+    hits = resrumor['hits']['hits']
+
     userlist = {}
     for hit in hits:
         if hit["_source"]['uid'] in userlist.keys():
@@ -150,6 +161,7 @@ def find_topic_num(en_name):   #用于搜索事件对应文本数，展示气泡
     return len(hits)
 
 def rumorbubbleChart():
+    '''
     query_body = {
   "query": {
     "filtered": {
@@ -173,9 +185,11 @@ def rumorbubbleChart():
   }
 }
 
-    res = weibo_es.search(index=ES_INDEX_CAL_LIST, body=query_body,request_timeout=100)
-    hits = res['hits']['hits']
-    print len(res)
+    res = weibo_es.search(index=ES_INDEX_CAL_LIST, body=query_body,request_timeout=100)'''
+    query_body = {"size":400,"query":{"match_all": {}}}
+    resrumor = weibo_es.search(index='rumor_sample', body=query_body,doc_type="rumor",request_timeout=100)
+    hits = resrumor['hits']['hits']
+    print len(resrumor)
     result = [[hit['_source']['comment'],hit['_source']['retweeted'],370601776,' '.join(hit['_source']['query_kwds'][:2]),hit['_source']['timestamp']] for hit in hits]# if hit['_source']['retweeted'] >= 30 and hit['_source']['comment'] >= 50 and hit['_source']['retweeted'] <= 1000 and hit['_source']['comment'] <= 1000]
     result = sorted(result,key= lambda x:(x[4]),reverse=True)[:20]   #提取前20个，按时间排序
     # print result
@@ -254,7 +268,7 @@ def get_rumor_pusher_maker(en_name):
     message_list=[]
     for i in range(0,10):
         # print retweeted_uid_dict[i]
-        retweeted_list.append([retweeted_uid_dict[i][0],i+1,retweeted_uid_dict[i][1][1]])
+        retweeted_list.append([retweeted_uid_dict[i][0],i+1,retweeted_uid_dict[i][1][2]])
         message_list.append([message_uid_dict[i][0],i+1,message_uid_dict[i][1][2]])
 
     result={}

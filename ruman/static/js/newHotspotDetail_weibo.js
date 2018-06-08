@@ -2492,7 +2492,7 @@
 
         // 渲染鱼骨图
             function showPropagate(data){
-                console.log(data);
+                // console.log(data);
                 // console.log(data[0]);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
@@ -2514,7 +2514,7 @@
 
         // 微博版本
             function showPropagate_weibo(data){
-                console.log(data);
+                // console.log(data);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
                     $(".fishBone").empty().append('<center>暂无记录</center>');
@@ -2535,7 +2535,7 @@
 
         // 知乎 版本 【贴吧、论坛】
             function showPropagate_zhihu(data){
-                console.log(data);
+                // console.log(data);
                 $(".fishBone").empty().append('<center>加载中...</center>');
                 if(data.length == 0){
                     $(".fishBone").empty().append('<center>暂无记录</center>');
@@ -2556,7 +2556,7 @@
 
         // 更新下拉框
             $('#fishSource_select').on('change',function(){
-                console.log($(this).val());
+                // console.log($(this).val());
                 var _val = $(this).val();
                 if(_val == 'news_new'){
                     showPropagate(newsData);

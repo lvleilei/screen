@@ -24,7 +24,8 @@
     display: inline-block;
     max-width: 24%;
     min-width: 24%;
-    margin-right: 0.5%;
+    /* margin-right: 0.5%; */
+    float: left;
 }
 #container .infor .inforLine b {
     display: inline-block;
@@ -44,8 +45,8 @@
 }
 #container .infor p span {
     display: inline-block;
-    width: 30%;
-    text-align: right;
+    /* width: 30%; */
+    /* text-align: right; */
 }
 /* 操纵详情 */
 #container #Manipulating_details {

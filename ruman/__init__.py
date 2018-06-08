@@ -4,6 +4,7 @@
 
 from ruman.homePage.views import homePage
 from ruman.maniPulate.views import maniPulate
+from ruman.newSituationtem.views import newSituationtem
 from ruman.hotSpot.views import hotSpot
 from ruman.newHotSpot.views import newHotSpot
 from ruman.hotSpotweibo.views import hotSpotweibo
@@ -27,6 +28,7 @@ def create_app():
 	app = Flask(__name__)
 	app.register_blueprint(homePage,url_prefix='/homePage')
 	app.register_blueprint(maniPulate,url_prefix='/maniPulate')
+	app.register_blueprint(newSituationtem,url_prefix='/newSituationtem')
 	app.register_blueprint(hotSpot,url_prefix='/hotSpot')
 	app.register_blueprint(newHotSpot,url_prefix='/newHotSpot')
 	app.register_blueprint(hotSpotweibo,url_prefix='/hotSpotweibo')

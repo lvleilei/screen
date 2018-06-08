@@ -158,9 +158,9 @@
                     valign: "middle",//垂直
                     formatter: function (value, row, index) {
                         if(row.ifthis == 1){
-                            return '<span class="this-stock" style="cursor:pointer;" onclick="jumpFrame_1(\''+row.name+'\',\''+row.id+'\',\''+row.manipulate_type_num+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
+                            return '<span class="this-stock" style="cursor:pointer;" onclick="jumpFrame_1(\''+row.name+'\',\''+row.id+'\',\''+row.manipulate_type_num+'\')" title="查看详情"><i class="fa fa-file-o"></i></span>';
                         }else {
-                            return '<span style="cursor:pointer;" onclick="jumpFrame_1(\''+row.name+'\',\''+row.id+'\',\''+row.manipulate_type_num+'\')" title="查看详情"><i class="icon icon-file-alt"></i></span>';
+                            return '<span style="cursor:pointer;" onclick="jumpFrame_1(\''+row.name+'\',\''+row.id+'\',\''+row.manipulate_type_num+'\')" title="查看详情"><i class="fa fa-file-o"></i></span>';
                         }
                     }
                 },
@@ -832,7 +832,7 @@
                         if (row.url==''||row.url=='null'||row.url=='unknown'||!row.url){
                             return '未知';
                         }else {
-                            return '<span style="cursor:pointer;" onclick="originalText(\''+row.url+'\')" title="查看原文"><i class="icon icon-file-alt"></i></span>';
+                            return '<span style="cursor:pointer;" onclick="originalText(\''+row.url+'\')" title="查看原文"><i class="fa fa-file-o"></i></span>';
                         }
 
                     }

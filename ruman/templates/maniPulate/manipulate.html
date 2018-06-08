@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="/static/css/manipulate.css">
     <style>
         /* 因为隐藏了 旧的 微博热点和溯源分析 */
-        #nav .nav_middle .main_li:nth-of-type(6) {
+        #nav .nav_middle .main_li:nth-of-type(1) {
             -webkit-transform: scale(1.3);
             -moz-transform: scale(1.3);
             -ms-transform: scale(1.3);
             -o-transform: scale(1.3);
             transform: scale(1.3);
         }
-        #nav .nav_middle .main_li:nth-of-type(6) a, #nav .nav_middle .main_li:nth-of-type(6) a i{
+        #nav .nav_middle .main_li:nth-of-type(1) a, #nav .nav_middle .main_li:nth-of-type(1) a i{
             color: #ffbf1d !important;
         }
         #fullPage-nav li .active span, .fullPage-slidesNav .active span {background: transparent;}
@@ -52,10 +52,14 @@
             top: 0;
             right: 0;
         }
-        .recordingTable .fixed-table-toolbar{
+        .recordingTable .fixed-table-toolbar,
+        .recordingTable_second .fixed-table-toolbar,
+        .recordingTable_third .fixed-table-toolbar{
             display:block;
         }
-        .recordingTable .fixed-table-toolbar .search {
+        .recordingTable .fixed-table-toolbar .search,
+        .recordingTable_second .fixed-table-toolbar .search ,
+        .recordingTable_third .fixed-table-toolbar .search {
             width:20%;
             position:absolute;
             /* top:2%; */
@@ -64,7 +68,9 @@
             right:60px;
             margin:0;
         }
-        .recordingTable .fixed-table-toolbar .search input{
+        .recordingTable .fixed-table-toolbar .search input,
+        .recordingTable_second .fixed-table-toolbar .search input,
+        .recordingTable_third .fixed-table-toolbar .search input{
             height:30px;
             padding: 3px 6px;
             background: transparent;
@@ -74,7 +80,9 @@
             font-size: 14px;
             vertical-align: middle;
         }
-        .recordingTable .fixed-table-toolbar .search input:focus{
+        .recordingTable .fixed-table-toolbar .search input:focus,
+        .recordingTable_second .fixed-table-toolbar .search input:focus,
+        .recordingTable_third .fixed-table-toolbar .search input:focus{
             background: #f8f8f8;
             color: #3c3c3c;
         }
@@ -84,7 +92,7 @@
 {% block main %}
 
     <div id="container" class="fullpage">
-        <div class="section firstScreen" style="padding-top: 1rem;">
+        <div class="section firstScreen">
             <div class="topTitle" style="margin: 0.1rem auto;margin-top:0;">
                 <dl>
                     <dd>本周预警数</dd>
@@ -100,13 +108,12 @@
                 </dl>
             </div>
 
+            <!-- 一级可疑股票池 -->
             <div style="position:relative;">
 
-                <div style="color: white;font-weight:700;font-size:0.24rem;position: relative;" class="clearfix">
-                    <h3 style="float:left;font-weight:700;margin:10px 0;"><i class="icon icon-eye-open"></i>&nbsp;疑似操纵预警</h3>
+                <div style="color: white;font-weight:700;font-size:0.24rem;position: relative;margin-bottom:0.2rem;" class="clearfix">
+                    <h3 style="float:left;font-weight:700;"><i class="fa fa-eye"></i>&nbsp;一级可疑股票池</h3>
                     <div class="searchbox">
-                        <!-- <input size="30" type="text" placeholder="请输入查询内容" class="searchWord"/> -->
-                        <!-- <button type="button" class="btn btn-primary btn-sm moreSitu" title="显示更多筛选条件"><i class="icon icon-plus"></i></button> -->
                         <button type="button" class="btn btn-primary btn-sm" style="vertical-align:top;">确定</button>
                     </div>
                 </div>
@@ -206,122 +213,37 @@
                     <div id="recordingTable"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="section secondScreen" style="overflow:hidden;">
-            <div style="color: white;font-size: 0.24rem;position: relative;">
-                <h3 style="color: white;display: inline-block;font-weight:700;"><i class="icon icon-dashboard"></i>&nbsp;预警态势</h3>
-                <div class="trendOpt">
-                    <span class="ct-tit">呈现方式：</span>
-                    <select id="second_select_1">
-                        <option value="90" selected>最近三个月</option>
-                        <option value="30">最近一个月</option>
-                        <option value="7">最近一周</option>
-                    </select>
+            <!-- 二级可疑股票池 -->
+            <div style="position:relative;margin-top:0.2rem;">
+                <div style="color: white;font-weight:700;font-size:0.24rem;position: relative;margin-bottom:0.2rem;" class="clearfix">
+                    <h3 style="float:left;font-weight:700;"><i class="fa fa-eye"></i>&nbsp;二级可疑股票池</h3>
+                    <div class="searchbox">
+                        <button type="button" class="btn btn-primary btn-sm" style="vertical-align:top;">确定</button>
+                    </div>
+                </div>
+
+                <div class="recordingTable_second" style="font-size: 0.14rem!important;">
+                    <div id="recordingTable_second">
+                        <center class="loading">正在加载中...</center>
+                    </div>
                 </div>
             </div>
-            <div id="trendLine" style="width:100%;height: 4.5rem;margin-top: 0.3rem;"></div>
-        </div>
 
-        <div class="section thirdScreen" style="overflow: hidden;">
-            <div style="color: white;font-size: 0.24rem;position: relative;">
-                <h3 style="color: white;display: inline-block;font-weight:700;"><i class="icon icon-dashboard"></i>&nbsp;操纵影响</h3>
-                <div class="influeOpt">
-                    <span class="ct-tit">呈现方式：</span>
-                    <select id="third_select_1">
-                        <option value="90" selected>最近三个月</option>
-                        <option value="30">最近一个月</option>
-                        <option value="7">最近一周</option>
-                    </select>
+
+            <!-- 三级可疑股票池 -->
+            <div style="position:relative;margin-top:0.2rem;">
+                <div style="color: white;font-weight:700;font-size:0.24rem;position: relative;margin-bottom:0.2rem;" class="clearfix">
+                    <h3 style="float:left;font-weight:700;"><i class="fa fa-eye"></i>&nbsp;三级可疑股票池</h3>
+                    <div class="searchbox">
+                        <button type="button" class="btn btn-primary btn-sm" style="vertical-align:top;">确定</button>
+                    </div>
                 </div>
-            </div>
-            <div id="influnce" style="width:100%;height: 4.5rem;margin-top: 0.3rem;"></div>
-        </div>
 
-        <div class="section fourScreen" style="overflow: hidden;">
-            <h3 style="color: white;text-align: left;"><i class="icon icon-stethoscope"></i>&nbsp;行业分布</h3>
-            <div class="barContent" style="width:100%;margin-top:0.4rem;">
-                <div id="bar-1" style="width:65%;height: 4.5rem;"></div>
-                <div id="bar-2" style="width:33%;">
-                    <h4 style="color: white;display: inline-block;"><i class="icon icon-bar-chart"></i>&nbsp;行业排行</h4>
-                    <select id="four_select">
-                        <option value="90" selected>最近三个月</option>
-                        <option value="30">最近一个月</option>
-                        <option value="7">最近一周</option>
-                    </select>
-                    <table class="barRank" cellpadding="0" cellspacing="0">
-                        <thead><th>行业</th><th>预警</th></thead>
-                        <tbody>
-                            <!-- <tr><td>批发</td><td>25</td></tr>
-                            <tr><td>材料</td><td>20</td></tr>
-                            <tr><td>运输设备</td><td>18</td></tr>
-                            <tr><td>建筑</td><td>15</td></tr>
-                            <tr><td>旅游酒店</td><td>15</td></tr> -->
-                            <tr><td class="loading" style="width:100%;" colspan="2" rowspan="" headers="">正在加载中...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="section fiveScreen">
-            <h3 style="color: white;text-align: left;"><i class="icon icon-cogs"></i>&nbsp;操纵类型</h3>
-            <div class="pieContent" style="width:100%;margin-top:0.4rem;">
-                <div id="pie-1" style="width:65%;height: 4.5rem;"></div>
-                <div id="pie-2" style="width:33%;">
-                    <h4 style="color: white;display: inline-block;"><i class="icon icon-bar-chart"></i>&nbsp;操纵类型分布</h4>
-                    <select id="five_select">
-                        <option value="1234" selected>全部</option>
-                        <option value="365">最近一年</option>
-                        <option value="90">最近三个月</option>
-                        <option value="30">最近一个月</option>
-                        <option value="7">最近一周</option>
-                    </select>
-                    <table class="pieRank pieRank_1" cellpadding="0" cellspacing="0">
-                        <!--<div id="barRank"></div>-->
-                        <thead>
-                            <th>类别</th>
-                            <th>预警</th>
-                        </thead>
-                        <tbody>
-                            <!-- <tr><td>高送转</td><td>324</td></tr>
-                            <tr><td>定向增发</td><td>252</td></tr>
-                            <tr><td>伪市值管理</td><td>431</td></tr>
-                            <tr><td>散布信息牟利</td><td>123</td></tr>
-                            <tr><td>其他</td><td>231</td></tr> -->
-                            <tr><td class="loading" style="width:100%;" colspan="2" rowspan="" headers="">正在加载中...</td></tr>
-                        </tbody>
-
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="section sixScreen" style="overflow: hidden;">
-            <!-- <h3 style="color: white;text-align: left;"><i class="icon icon-building"></i>&nbsp;市值分布</h3> -->
-            <h3 style="color: white;text-align: left;"><i class="icon icon-building"></i>&nbsp;板块分布</h3>
-            <div class="pieContent" style="width:100%;margin-top:0.4rem;">
-                <div id="pie-3" style="width:65%;height: 4.5rem;"></div>
-                <div id="pie-4" style="width:33%;">
-                    <h4 style="color: white;display: inline-block;"><i class="icon icon-bar-chart"></i>&nbsp;操纵公司市值分布</h4>
-                    <select id="six_select">
-                        <option value="90" selected>最近三个月</option>
-                        <option value="30">最近一个月</option>
-                        <option value="7">最近一周</option>
-                    </select>
-                    <table class="pieRank pieRank_2">
-                        <!--<div id="barRank"></div>-->
-                        <thead>
-                            <th>类别</th>
-                            <th>预警</th>
-                        </thead>
-                        <tbody>
-                            <!-- <tr><td>主板</td><td>335</td></tr>
-                            <tr><td>创业板</td><td>310</td></tr>
-                            <tr><td>中小板</td><td>234</td></tr> -->
-                            <tr><td class="loading" style="width:100%;" colspan="2" rowspan="" headers="">正在加载中...</td></tr>
-                        </tbody>
-                    </table>
+                <div class="recordingTable_third" style="font-size: 0.14rem!important;">
+                    <div id="recordingTable_third">
+                        <center class="loading">正在加载中...</center>
+                    </div>
                 </div>
             </div>
         </div>
@@ -362,17 +284,23 @@
     <!-- <script src="/static/js/echarts-2/build/dist/echarts.js"></script> -->
     <script src="/static/js/jquery.fullPage.min.js"></script>
     <script>
-        $('.fullpage').fullpage({
-            'verticalCentered': false,
-            'css3': true,
-            'anchors': ['page1', 'page2','page3','page4','page5','page6','page7'],
-            'navigation': 'true',
-            'loopBottom':'true',
-            'navigationPosition': 'right',
-            'fixedElements':'#nav, #success',
-            // 'navigationTooltips': ['疑似操纵预警','预警态势','操纵影响','行业分布','操纵类型','市值分布']
-            'navigationTooltips': ['疑似操纵预警','预警态势','操纵影响','行业分布','操纵类型','板块分布']
-        });
+        // $('.fullpage').fullpage({
+        //     'verticalCentered': false,
+        //     'css3': true,
+        //     'anchors': ['page1', 'page2','page3','page4','page5','page6','page7'],
+        //     'navigation': 'true',
+        //     'loopBottom':'true',
+        //     'navigationPosition': 'right',
+        //     'fixedElements':'#nav, #success',
+        //     // 'navigationTooltips': ['疑似操纵预警','预警态势','操纵影响','行业分布','操纵类型','市值分布']
+        //     'navigationTooltips': ['疑似操纵预警','预警态势','操纵影响','行业分布','操纵类型','板块分布']
+        // });
+
+
+        // ====
+        $('#container').css({minHeight:$(window).height()});
+        $('.firstScreen').css('padding-top',$('#nav').outerHeight(true));
+
     </script>
     <script src="/static/js/manipulate.js"></script>
 {% endblock %}

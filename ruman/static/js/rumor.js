@@ -302,7 +302,7 @@ var industry=['农、林、\n牧、渔业','采掘业','制造业','电力、煤
                     left: '0%',
                     right: '11%',
                     bottom: '0%',
-                    top:'7%',
+                    top:'13%',
                     containLabel: true
                 },
                 xAxis: {

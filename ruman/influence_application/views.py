@@ -4,6 +4,7 @@ import os
 import time
 import sys
 import json
+from elasticsearch import Elasticsearch
 from flask import Blueprint, url_for, render_template, request, abort, flash, session, redirect
 from search_user_index_function import search_top_index, search_influence_detail, user_index_range_distribution,\
                                        search_max_single_field, search_portrait_history_active_info
@@ -14,7 +15,8 @@ from ruman.global_utils import ES_CLUSTER_FLOW1 as es
 from influence_description import influence_description
 from ruman.global_utils import copy_portrait_index_name, copy_portrait_index_type, portrait_index_name, portrait_index_type
 from ruman.parameter import pre_influence_index, influence_doctype,RUN_TYPE,RUN_TEST_TIME,DAY
-from ruman.time_utils import ts2datetime, datetime2ts
+from ruman.time_utils import ts2datetime, datetime2ts,ts2date
+from uids_dict import uid_dict
 
 portrait_index = copy_portrait_index_name
 portrait_type = copy_portrait_index_type
@@ -77,23 +79,25 @@ def ajax_search_influence():
 def ajax_specified_user_active():
     date = request.args.get('date', '') # '2013-09-01'
     uid = request.args.get('uid', '') # 123456,123456
-    date = str(date)
+    en_name = request.args.get('en_name', '')
 
     results = []
-
-    if date and uid:
-        if RUN_TYPE==0:
-            timetemp = datetime2ts(RUN_TEST_TIME)-DAY
-            date = ts2datetime(timetemp)
-        print date
-        index_name = pre_influence_index + date.replace('-','')
-        list_1 = []
-        uid_list = [item for item in uid.split(',')]
-        result = search_influence_detail(uid_list, index_name, "bci") 
-
-        description = influence_description(result)
-        results.append(result)
-        results.append(description)
+    if uid_dict.has_key(uid):
+        results.append(uid_dict[uid])
+    else:
+        if date and uid:
+            if RUN_TYPE==0:
+                timetemp = datetime2ts(RUN_TEST_TIME)-DAY
+                date = ts2datetime(timetemp)
+            print date
+            index_name = pre_influence_index + date.replace('-','')
+            list_1 = []
+            uid_list = [item for item in uid.split(',')]
+            result = search_influence_detail(uid_list, index_name, "bci") 
+    
+            description = influence_description(result)
+            results.append(result)
+            results.append(description)
 
     return json.dumps(results)
 

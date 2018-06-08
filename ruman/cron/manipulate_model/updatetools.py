@@ -418,6 +418,16 @@ def read_insert():
     insert_sql(df1,1,1)
     insert_sql(df0,1,0)
 
+def update_punish():
+    conn = default_db()
+    cur = conn.cursor()
+    update = "DELETE FROM %s WHERE %s <= %d" % ('punish','id',4263)
+    try:
+        cur.execute(update)
+        conn.commit()
+    except Exception, e:
+        print e
+
 if __name__=="__main__":
     #update_day_label()
     #delete_holders_pct()
@@ -451,5 +461,6 @@ if __name__=="__main__":
     #transfer2es('2018-01-01','2018-05-15')
     #update_announce()
     #delete_nouse_weipan()
-    update_day_show()
+    #update_day_show()
     #read_insert()
+    update_punish()

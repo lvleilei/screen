@@ -227,3 +227,21 @@
 #spreadRank, #recordingTable {
     border :none;
 }
+
+.firstTable div.lieOpt {
+    float: left;
+    font-size: 0.14rem;
+    vertical-align: middle;
+    margin: 10px 0;
+    margin-left: 0.3rem;
+}
+.firstTable div.lieOpt select {
+    display: inline-block;
+    padding: 0.02rem 0.07rem;
+    border: 0.01rem solid silver;
+    border-radius: 0.05rem;
+    font-size: 0.12rem;
+    background: #005b6d;
+    color: white;
+    /* margin-left: 0.3rem; */
+}

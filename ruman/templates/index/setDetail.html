@@ -2,15 +2,11 @@
 {% block title %}<title>操纵详情</title>{% endblock %}
 
 {% block my_css %}
-    <!-- <link rel="stylesheet" href="/static/css/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" href="/static/css/bootstrap-table.min.css"> -->
-    <!-- <link rel="stylesheet" href="/static/css/font-awesome.min.css"> -->
-    <!-- <link rel="stylesheet" href="/static/css/public_nav.css"> -->
-    <!--<link rel="stylesheet" href="/static/css/lie.css">-->
+    <link rel="stylesheet" type="text/css" href="/static/css/fishBone.css">
+
     <link rel="stylesheet" href="/static/css/set.css">
     <style>
         <!---->
-        /* #nav .nav_left h3 {color: #333!important;} */
         #nav .nav_middle .main_li:nth-of-type(6) {
             -webkit-transform: scale(1.3);
             -moz-transform: scale(1.3);
@@ -18,9 +14,6 @@
             -o-transform: scale(1.3);
             transform: scale(1.3);
         }
-        /*#nav .nav_middle .main_li:nth-of-type(5) a, #nav .nav_middle .main_li:nth-of-type(5) a i{*/
-            /*color: #08F !important;*/
-        /*}*/
         .s1 {color: #08F!important;}
         .s2 {color: #ff9645!important;}
         #nav {background: #fff;box-shadow: 0 2px 5px rgba(41,46,51,0.15);color: #0e0e0e;}
@@ -81,6 +74,131 @@
             padding: 2px 5px;
             margin-right: 36px;
         }
+
+        /* 2018年6月7日21:24:19*/
+        /* 二级导航 */
+            .content_box {
+                position:relative;
+                padding-top:0.56rem;
+                margin: 0.02rem 0;
+            }
+            .portrait-2 {
+                position:absolute;
+                top:0;
+                height:0.56rem;
+                width:100%;
+                z-index:9999;
+            }
+
+            .navi_head{
+                cursor: pointer;
+                font-weight: 700;
+                height: 0.56rem;
+                border-bottom: 1px solid #e0e0e0;
+                background-color:#e9e9e9;
+                /*background-color:#459df5;*/
+            }
+            .navi_body{
+                cursor: pointer;
+                overflow:hidden;
+                height:0.56rem;
+                background: #e9e9e9;
+                /*background:rgba(36,97,158,0.9);*/
+                transition:height ease 0.5s;
+            }
+            .navi_body:hover{
+                height:2.8rem;
+            }
+            .navi_head>div>span
+            .navi_body:hover .navi_head>div>span{
+                border-right: 1px solid silver;
+            }
+
+            .navi_head>div>span{
+                font-weight: 100;
+                color: black;
+                text-align:center;
+                height:2.8rem;
+                display:inline-block;
+                font-size:0.2rem;
+                vertical-align:top;
+                /*margin-left: 0.2rem;*/
+                padding:0 0.3rem;
+
+                border-top: 0.04rem solid transparent;
+                border-right: 1px solid transparent;
+            }
+
+            .navi_head>div>span>p a{
+                text-decoration:none;
+            }
+            /*.navi_head>div>span>p a:hover{*/
+                /*text-decoration:underline;*/
+            /*}*/
+
+            .navi_title{
+                font-size:0.2rem;
+                line-height:0.56rem;
+                margin-top:0;
+            }
+
+            .navi_head>div>span:hover{
+                /*background:rgba(100,100,100,0.2);*/
+                border-top: 0.04rem solid #286090;
+                box-shadow:1px 7px 13px 1px #c6c2c2;
+                /*box-shadow: 4px 1px 7px #c6c2c2;*/
+            }
+            .navi_head p a.downSpan {
+                display:block;
+                margin-top: 0.14rem;
+                font-size: 0.18rem;
+                text-align: left;
+            }
+            .navi_head p a.downSpan.disabled {
+                color: #9aa39e;
+                /* font-weight:600; */
+                font-weight:400;
+                cursor:not-allowed;
+            }
+            .navi_head p a {
+                color: #111;
+            }
+            .navi_head p a:hover {
+                color: #0084ff;
+            }
+
+
+        /* 二级导航 */
+
+        /* 报告标题 */
+        .pagetitle {
+            background: #fff;
+            position: fixed;
+            z-index: 10000;
+            width: 80%;
+        }
+
+        /* 风险评价异常指标： */
+
+            #container .abnormalIndex span.quota {
+                font-size:14px;
+                color: #ff9645;
+                /* display:none; */
+                cursor:pointer;
+            }
+            #container .riskValue .riskLeft .abnormalIndex span.loading {
+                display:block;
+            }
+        /* 基本信息 样式 */
+            #container .infor .inforLine.inforLineLeft {
+                min-width: 55%;
+            }
+            #container .infor .inforLine.inforLineRight {
+                min-width: 45%;
+                margin-right:0;
+            }
+
+
     </style>
 {% endblock %}
 
@@ -90,12 +208,12 @@
             <span class="top-1 btn btn-primary">一键取证</span>
             <span class="top btn btn-primary">一键报告</span>
         </div> -->
-        <div style="text-align: center; margin-bottom:20px;">
+        <div class="pagetitle" style="text-align: center; padding:0.2rem 0;">
             <span style="font-size: 36px;">“<span id="title-1"></span>”操纵预警报告</span>
         </div>
         <!-- 基本信息 -->
         <div id="card">
-            <div class="infor">
+            <!-- <div class="infor">
                 <p class="infor-1 inforLine">
                     <span>公司名称：</span>&nbsp;<b class="type-1">加载中...</b>
                 </p>
@@ -120,162 +238,343 @@
                 <p class="infor-8 inforLine">
                     <span>所属板块：</span>&nbsp;<b class="type-8">加载中...</b>
                 </p>
-            </div>
-        </div>
-        <!-- 操纵详情 -->
-        <div id="Manipulating_details" style="margin:0.02rem 0">
-            <!-- <center class="load">正在努力加载中...</center> -->
-            <div id="Manipulating_details_content">
-                <center class="loading">正在加载中...</center>
-            </div>
-        </div>
+            </div> -->
 
-        <!-- 价格与收益率 -->
-        <div id="Price">
-            <h3><i class="icon icon-signin"></i>&nbsp;价格与收益率</h3>
-            <!-- <select class="_time">
-                <option value="7">近一周</option>
-                <option value="30">近一个月</option>
-                <option value="90">近三个月</option>
-                <option value="90">近半年</option>
-                <option value="365">近一年</option>
-            </select> -->
-            <div class="clearfix">
-                <div id="Price_1" class="half" style="margin-right:2%;"></div>
-                <div id="Price_2" class="half"></div>
+            <div class="infor clearfix">
+                <h3 style="margin-top:0;">
+                    <b class="stock-name"></b>&nbsp;
+                    <!-- <i class="icon icon-edit comBisic" title="编辑" id="card-edit"></i> -->
+                    <!-- <span class="nameStatus" style="font-size: 12px;color: #ff761f;">正在监测</span> -->
+                    <!-- <span class="status-1 status btn-primary"><i class="icon icon-retweet"></i>&nbsp;停止监测</span> -->
+                    <!-- <span class="status-2 status btn-primary"><i class="icon icon-sitemap"></i>&nbsp;查看网络图</span> -->
+                    <!-- <span class="status top-1 btn-primary"><i class="icon icon-signin"></i>&nbsp;一键取证</span> -->
+                    <!-- <span id="LL-PDF" class="status top-2 btn-primary"><i class="icon icon-cloud-upload"></i>&nbsp;一键报告</span> -->
+                </h3>
+                <div class="pull-left inforLeft clearfix" style="width:70%;">
+                    <p class="isPlatform inforLine inforLineLeft">
+                        <!-- <span>工商注册公司名称：</span>&nbsp;<b class="isPlatformName"></b> -->
+                        <span title="机构名称">公司名称：</span>&nbsp;<b class="type-1"></b>
+                    </p>
+                    <p class="infor-3 inforLine inforLineRight">
+                        <span title="公司属性">公司属性：</span>&nbsp;<b class="type-7"></b>
+                    </p>
 
-                <!-- <div id="Price_3" class="half" style="margin-right:2%;"></div>
-                <div id="Price_4" class="half"></div> -->
-            </div>
-        </div>
+                    <p class="infor-4 inforLine inforLineLeft">
+                        <span title="成立时间">成立时间：</span>&nbsp;<b class="type-3"></b>
+                    </p>
 
-        <div id="trading" class="main_content">
-            <h3><i class="icon icon-glass"></i>&nbsp;成交量与成交额</h3>
-            <div class="clearfix">
-                <div id="Price_3" class="half" style="margin-right:2%;"></div>
-                <div id="Price_4" class="half"></div>
-            </div>
-        </div>
+                    <p class="infor-2 inforLine inforLineRight">
+                        <span title="所属板块">所属板块</span>&nbsp;<b class="type-8"></b>
+                    </p>
 
-        <!-- 交易分析 大宗交易-->
-        <div id="Transaction_analysis" class="main_content">
-            <h3><i class="icon icon-random"></i>&nbsp;交易分析</h3>
+                    <p class="infor-5 inforLine inforLineLeft">
+                        <span title="法人代表">法人代表：</span>&nbsp;<b class="type-6"></b>
+                    </p>
 
-            <div class="anaDown">
-                <!-- <b>万科大宗交易</b> -->
-                <b class="stock-name"></b><b>大宗交易</b>
-            </div>
-            <div class="Transaction-2">
-                <div id="Transaction-2">
-                    <center class="loading">正在加载中...</center>
+                    <p class="infor-9 inforLine inforLineRight">
+                        <span title="所属行业">所属行业：</span>&nbsp;<b class="type-4" style="max-width:100%;"></b>
+                    </p>
+
+                    <p class="infor-6 inforLine inforLineLeft">
+                        <span title="注册资本">注册资本：</span>&nbsp;<b class="type-5"></b>
+                    </p>
+
+                    <p class="infor-1 inforLine inforLineRight">
+                        <span title="注册地址">注册地址：</span>&nbsp;<b class="type-2" style="max-width:100%;"></b>
+                    </p>
+                    <!-- ========================================== -->
+                    <p class="infor-8 inforLine inforLineLeft">
+                        <span title="官网地址">官网地址：</span>&nbsp;
+                        <b class="website" style="max-width:100%;text-overflow:clip;">
+                            <a style="display:inline;max-width:65%;overflow: hidden;text-overflow: ellipsis;"></a>
+                            <button class="btn-primary btn-xs" id="showAllwebsite" style="margin-left:5px;display:none;">查看更多</button>
+                        </b>
+                    </p>
+                    <p class="infor-8 inforLine inforLineRight">
+                        <span title="问题标签">问题标签：</span>&nbsp;<b class="val-5" style="color: #ff9645;"></b><i class="icon icon-edit " id="problem-edit" title="编辑" style="margin-left:10px;"></i>
+                    </p>
+                    <p class="infor-8 inforLine inforLineLeft">
+                        <span title="疑似非集">疑似非集：</span>&nbsp;<b class="val-1" style="max-width:100%;"><a></a></b>
+                    </p>
+                    <p class="infor-8 inforLine inforLineRight">
+                        <span title="风险等级">风险等级：</span>&nbsp;<b class="val-2" style="color: #ff9645;"></b>
+                    </p>
+                    <div class="abnormalIndex clearfix" style="float:left;width:100%;">
+                        <div class="pull-left" style="font-weight:400;width:7%;">
+                            <span title="异常指标">异常指标：</span>
+                        </div>
+                        <!-- <div class="pull-left" style="width:80%;"> -->
+                        <div class="pull-left" style="width:93%;">
+                            <!-- <span class="quota loading">正在加载中...</span> -->
+                            <!-- <span class="quota nothing">暂无</span> -->
+                            <span class="quota comment_rank" onclick="Lscroll('.commentInfor')">
+                                负面舆情多:<b style="color:#ff6d70;" id="comment_rank_num">14</b>条，
+                                高于<b style="color:#ff6d70;" id="_commentRank">80%</b>的监测对象。
+                            </span>
+                            <span class="quota suit_rank" onclick="Lscroll('.litigation')">
+                                法律诉讼多:<b style="color:#ff6d70;" id="suit_rank_num">22</b>条，
+                                高于<b style="color:#ff6d70;" id="_suit_rank">45%</b>的监测对象。
+                            </span>
+                            <span class="quota ad_rank" onclick="Lscroll('.advertising')">
+                                煽动性广告多:<b style="color:#ff6d70;" id="ad_rank_num">78</b>条，
+                                高于<b style="color:#ff6d70;" id="_ad_rank">30%</b>的监测对象。
+                            </span>
+                            <span class="quota return_rank" onclick="Lscroll('.income')">
+                                产品收益率过高:<b style="color:#ff6d70;" id="return_rank_num"></b>，
+                                处于所有监测对象收益率排序的前<b style="color:#ff6d70;" id="_return_rank">90</b>。
+                            </span>
+                            <!-- <span class="quota abnor_rank" onclick="Lscroll('.operating')">
+                                经营异常多:<b style="color:#ff6d70;" id="abnor_num">88%</b>条，
+                                高于<b style="color:#ff6d70;" id="_abnor_rank"></b>的监测对象。
+                            </span>
+                            <span class="quota guarantee_rank" onclick="Lscroll('.promise')">
+                                存在担保承诺:<b style="color:#ff6d70;" id="_guarantee_rank"></b>。
+                            </span> -->
+                        </div>
+                    </div>
+                    <!-- 暂 注释
+                    <p class="infor-7 inforLine">
+                        <span>旗下产品：</span>&nbsp;<b class="type">无</b>
+                    </p> -->
+                </div>
+                <!-- 右侧 风险评价 雷达图 -->
+                <div class="pull-right inforChart" style="width:30%;">
+                    <!-- <div id="inforChart" style="width:2rem;height:2rem;border:1px solid #333;"> -->
+                    <!-- <div id="inforChart" style="width:100%;height:300px;"> -->
+                    <div id="inforChart" style="width:100%;"><!-- height动态设置 -->
+
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 财报数据 -->
-        <div id="profit" class="main_content">
-            <h3><i class="icon icon-calendar"></i>&nbsp;财报数据</h3>
+        <!-- 鱼骨图 -->
+        <div class="fishBone" id="spread-pie-3">
+            <center>正在努力加载中...</center>
+        </div>
 
-            <div class="anaDown">
-                <!-- <b class="stock-name">万科</b><b>大宗交易</b> -->
-            </div>
-            <div class="profit-content">
-                <div id="profit-content">
+        <!-- 内容 大div -->
+        <div class="content_box">
+
+            <!-- 二级导航 -->
+                <!-- <div class="portrait-2" style="height:3rem"> -->
+                <div class="portrait-2">
+                    <div class="navi_body">
+                        <div class="navi_head">
+                            <div style="width:90%; margin:0 auto;font-size: 0;">
+
+                                <span>
+                                    <p class="navi_title">收益率</p>
+                                    <!-- <p><a class="downSpan" data-targetel=".income" onclick="Lscroll('.income')">收益率</a></p> -->
+                                    <p><a class="downSpan" data-targetel="#Price">价格与收益率</a></p>
+                                    <p><a class="downSpan" data-targetel="#trading">成交量与成交额</a></p>
+                                </span>
+                                <span>
+                                    <p class="navi_title">违规承诺</p>
+                                    <!-- 暂无 模块 禁止跳转 添加disabled类名 -->
+                                    <p><a class="downSpan" data-targetel="#Transaction_analysis">交易分析</a></p>
+                                </span>
+                                <span>
+                                    <p class="navi_title">广告宣传</p>
+                                    <p><a class="downSpan" data-targetel="#profit">财报数据</a></p>
+                                    <p><a class="downSpan" data-targetel="#Bulletin_information">公告信息</a></p>
+                                    <!-- <p><a class="downSpan" data-targetel=".publicity">宣传行为</a></p> -->
+                                </span>
+                                <span>
+                                    <p class="navi_title">舆情分析</p>
+                                    <!-- 暂无 模块 禁止跳转 添加disabled类名 -->
+                                    <p><a class="downSpan disabled" data-targetel=".commentInfor">舆情趋势</a></p>
+                                    <p><a class="downSpan disabled" data-targetel=".negativeCommentInfor">负面舆情</a></p>
+                                    <p><a class="downSpan disabled" data-targetel=".otherCommentInfor">其他舆情</a></p>
+                                </span>
+
+                                <span>
+                                    <p class="navi_title">企业关系</p>
+                                    <p><a class="downSpan" data-targetel="#Stock">前十大股东</a></p>
+                                    <p><a class="downSpan" data-targetel="#Shareholding">股权结构</a></p>
+                                </span>
+                                <span>
+                                    <p class="navi_title">经营活动</p>
+                                    <p><a class="downSpan" data-targetel="#creditHistory">历史信用</a></p>
+                                    <!-- <p><a class="disabled downSpan" onclick="Lscroll('.operating')">经营异常</a></p> 暂去掉禁用-->
+                                    <p><a class=" downSpan disabled" data-targetel=".operating">经营异常</a></p>
+                                    <p><a class=" downSpan disabled" data-targetel=".equityOut_ofQuality">股权出质</a></p>
+                                    <p><a class=" downSpan disabled" data-targetel=".chattelMortgage">动产抵押</a></p>
+                                </span>
+                                <span>
+                                    <p class="navi_title">司法风险</p>
+                                    <p><a class="downSpan" data-targetel=".litigation">法律诉讼</a></p>
+                                    <p><a class=" downSpan disabled" data-targetel=".dishonestPerson">失信记录</a></p>
+                                    <p><a class=" downSpan disabled" data-targetel=".administrativeSanction">行政处罚</a></p>
+                                    <p><a class=" downSpan disabled" data-targetel=".seriousIllegality">严重违法</a></p>
+                                </span>
+
+                                <span>
+                                    <p class="navi_title">其他风险</p>
+                                    <p><a class=" downSpan disabled" data-targetel="" >未备案</a></p>
+                                    <p><a class=" downSpan disabled" data-targetel="">数据在境外</a></p>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- 二级导航 -->
+
+
+            <!-- 操纵详情 -->
+            <div id="Manipulating_details" style="margin:0.02rem 0">
+                <!-- <center class="load">正在努力加载中...</center> -->
+                <div id="Manipulating_details_content">
                     <center class="loading">正在加载中...</center>
                 </div>
             </div>
-        </div>
 
-        <!-- 公告信息 -->
-        <div id="Bulletin_information" style="margin:0.02rem 0">
-            <h3><i class="icon icon-comments-alt"></i>&nbsp;公告信息</h3>
-            <div class="Bulletin_content">
-                <div id="Bulletin_content">
-                    <center class="loading">正在加载中...</center>
+            <!-- 价格与收益率 -->
+            <div id="Price">
+                <h3><i class="icon icon-signin"></i>&nbsp;价格与收益率</h3>
+                <!-- <select class="_time">
+                    <option value="7">近一周</option>
+                    <option value="30">近一个月</option>
+                    <option value="90">近三个月</option>
+                    <option value="90">近半年</option>
+                    <option value="365">近一年</option>
+                </select> -->
+                <div class="clearfix">
+                    <div id="Price_1" class="half" style="margin-right:2%;"></div>
+                    <div id="Price_2" class="half"></div>
+
+                    <!-- <div id="Price_3" class="half" style="margin-right:2%;"></div>
+                    <div id="Price_4" class="half"></div> -->
                 </div>
             </div>
-        </div>
 
-        <!-- 虚假消息 操纵相关消息 -->
-        <div id="False_message" class="main_content">
-            <h3 style="margin-bottom: 0.1rem;"><i class="icon icon-certificate"></i>&nbsp;操纵相关消息</h3>
-            <p class="False_content">加载中...</p>
-            <p class="False_info">
-                <!-- <span>是否虚假消息：<b class="isType-1">加载中...</b></span> -->
-                <span>发布时间：<b class="isType-2">加载中...</b></span>
-                <span>发布者：<b class="isType-3">加载中...</b></span>
-                <span>来源：<b class="isType-4">加载中...</b></span>
-            </p>
-        </div>
-
-        <!--舆情分析-->
-        <div id="Public_opinion" class="main_content" style="margin-top: 0.02rem;">
-            <h3 style="margin-bottom: 0.1rem;"><i class="icon icon-bullhorn"></i>&nbsp;舆情分析</h3>
-            <div class="opinion">
-                <div id="opinion"></div>
+            <div id="trading" class="main_content">
+                <h3><i class="icon icon-glass"></i>&nbsp;成交量与成交额</h3>
+                <div class="clearfix">
+                    <div id="Price_3" class="half" style="margin-right:2%;"></div>
+                    <div id="Price_4" class="half"></div>
+                </div>
             </div>
-        </div>
+
+            <!-- 交易分析 大宗交易-->
+            <div id="Transaction_analysis" class="main_content">
+                <h3><i class="icon icon-random"></i>&nbsp;交易分析</h3>
+
+                <div class="anaDown">
+                    <!-- <b>万科大宗交易</b> -->
+                    <b class="stock-name"></b><b>大宗交易</b>
+                </div>
+                <div class="Transaction-2">
+                    <div id="Transaction-2">
+                        <center class="loading">正在加载中...</center>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 财报数据 -->
+            <div id="profit" class="main_content">
+                <h3><i class="icon icon-calendar"></i>&nbsp;财报数据</h3>
+
+                <div class="anaDown">
+                    <!-- <b class="stock-name">万科</b><b>大宗交易</b> -->
+                </div>
+                <div class="profit-content">
+                    <div id="profit-content">
+                        <center class="loading">正在加载中...</center>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 公告信息 -->
+            <div id="Bulletin_information" style="margin:0.02rem 0">
+                <h3><i class="icon icon-comments-alt"></i>&nbsp;公告信息</h3>
+                <div class="Bulletin_content">
+                    <div id="Bulletin_content">
+                        <center class="loading">正在加载中...</center>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 虚假消息 操纵相关消息 -->
+            <div id="False_message" class="main_content">
+                <h3 style="margin-bottom: 0.1rem;"><i class="icon icon-certificate"></i>&nbsp;操纵相关消息</h3>
+                <p class="False_content">加载中...</p>
+                <p class="False_info">
+                    <!-- <span>是否虚假消息：<b class="isType-1">加载中...</b></span> -->
+                    <span>发布时间：<b class="isType-2">加载中...</b></span>
+                    <span>发布者：<b class="isType-3">加载中...</b></span>
+                    <span>来源：<b class="isType-4">加载中...</b></span>
+                </p>
+            </div>
+
+            <!--舆情分析-->
+            <div id="Public_opinion" class="main_content" style="margin-top: 0.02rem;">
+                <h3 style="margin-bottom: 0.1rem;"><i class="icon icon-bullhorn"></i>&nbsp;舆情分析</h3>
+                <div class="opinion">
+                    <div id="opinion"></div>
+                </div>
+            </div>
 
 
-        <!-- 股权分析 前十大股东 -->
-        <div id="Stock" class="main_content clearfix" style="margin:0.02rem 0">
-            <div class="clearfix">
-                <h3 style="float:left;"><i class="icon icon-list-alt"></i>&nbsp;前十大股东</h3>
+            <!-- 股权分析 前十大股东 -->
+            <div id="Stock" class="main_content clearfix" style="margin:0.02rem 0">
+                <div class="clearfix">
+                    <h3 style="float:left;"><i class="icon icon-list-alt"></i>&nbsp;前十大股东</h3>
 
-                <div class="" style="float:right;">
-                    <!-- <b>万科前十大股东</b> -->
-                    <!-- <b class="stock-name">万科</b><b>前十大股东</b> -->
-                    <select class="_time2">
-                        <!-- <option value="1">2017年第一季度</option>
-                        <option value="2">2017年第二季度</option>
-                        <option value="3">2017年第三季度</option> -->
+                    <div class="" style="float:right;">
+                        <!-- <b>万科前十大股东</b> -->
+                        <!-- <b class="stock-name">万科</b><b>前十大股东</b> -->
+                        <select class="_time2">
+                            <!-- <option value="1">2017年第一季度</option>
+                            <option value="2">2017年第二季度</option>
+                            <option value="3">2017年第三季度</option> -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="Transaction-1">
+                    <div id="Transaction-1">
+                        <center class="loading">正在加载中...</center>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 股权结构 -->
+            <div id="Shareholding" class="main_content clearfix" style="margin:0.02rem 0">
+                <h3 class="pull-left"><i class="icon icon-sitemap"></i>&nbsp;股权结构</h3>
+                <div class="pull-right clearfix">
+                    <select class="shareholding_time">
+                        <!-- <option value="1">2017年第一季度</option> -->
                     </select>
                 </div>
-            </div>
 
-            <div class="Transaction-1">
-                <div id="Transaction-1">
-                    <center class="loading">正在加载中...</center>
+                <div class="clearfix pull-left" style="width:100%;">
+                    <div id="Stock_1" class="half" style="margin-right:2%;">
+
+                    </div>
+                    <div id="Stock_2" class="half"></div>
+                </div>
+
+
+                <div class="clearfix pull-left" style="width:100%;">
+                    <div id="Stock_3" class="half" style="margin-right:2%;">
+
+                    </div>
+                    <div id="Stock_4" class="half"></div>
                 </div>
             </div>
+
+            <!-- 历史信用 -->
+            <div id="creditHistory" class="main_content clearfix" style="margin:0.02rem 0">
+                <h3 class=""><i class="icon icon-list-ul"></i>&nbsp;历史信用</h3>
+                <div class="creditHistory_content">
+                    <div id="creditHistory_content">
+                        <center class="loading">正在加载中...</center>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <!-- 股权结构 -->
-        <div id="Shareholding" class="main_content clearfix" style="margin:0.02rem 0">
-            <h3 class="pull-left"><i class="icon icon-sitemap"></i>&nbsp;股权结构</h3>
-            <div class="pull-right clearfix">
-                <select class="shareholding_time">
-                    <!-- <option value="1">2017年第一季度</option> -->
-                </select>
-            </div>
-
-            <div class="clearfix pull-left" style="width:100%;">
-                <div id="Stock_1" class="half" style="margin-right:2%;">
-
-                </div>
-                <div id="Stock_2" class="half"></div>
-            </div>
-
-
-            <div class="clearfix pull-left" style="width:100%;">
-                <div id="Stock_3" class="half" style="margin-right:2%;">
-
-                </div>
-                <div id="Stock_4" class="half"></div>
-            </div>
-        </div>
-
-        <!-- 历史信用 -->
-        <div id="creditHistory" class="main_content clearfix" style="margin:0.02rem 0">
-            <h3 class=""><i class="icon icon-list-ul"></i>&nbsp;历史信用</h3>
-            <div class="creditHistory_content">
-                <div id="creditHistory_content">
-                    <center class="loading">正在加载中...</center>
-                </div>
-            </div>
-        </div>
-
-
 
     </div>
 {% endblock %}
@@ -285,6 +584,10 @@
     <!-- <script src="/static/js/bootstrap-table.min.js"></script> -->
     <!-- <script src="/static/js/bootstrap-table-zh-CN.min.js"></script> -->
     <!-- <script src="/static/echarts/echarts.min.js"></script> -->
+
+    <script type="text/javascript" src="/static/js/jquery.SuperSlide.2.1.1.js"></script> <!-- 基于jquery-superSlide鱼骨图插件 -->
+    <script type="text/javascript" src="/static/js/fishBone.js"></script> <!-- 基于jquery-superSlide鱼骨图插件 -->
+
     <script src="/static/js/chalk.js"></script>
 
     <script>
@@ -295,9 +598,12 @@
         var id = '{{id}}';
         console.log(id);
 
-        var manipulate_type_num = {{manipulate_type_num}};
+        var manipulate_type_num = '{{manipulate_type_num}}';
 
-        // =============================nav
+        $('#container').css('padding-top',$('#nav').outerHeight(true));
+        $('#card').css('margin-top',$('.pagetitle').outerHeight(true));
+
+        // ============================= Nav
             $('#nav .nav_middle .main_li .li_a').on('mouseover',function () {
                 $(this).siblings('.line').css({left:'0%'});
                 if ($(document).scrollTop()!=0){
@@ -319,8 +625,9 @@
             });
             $('#nav .nav_left img').attr('src','/static/images/logoDetail.png');
             $('#nav .nav_left h3').css({color:'#333'});
-            $('#nav .nav_middle .main_li .li_a').eq(5).addClass('s1');
-            $('#nav .nav_middle .main_li .li_a').eq(5).find('i').addClass('s1');
+            $('#nav .nav_middle .main_li .li_a').eq(0).addClass('s1');
+            $('#nav .nav_middle .main_li .li_a').eq(0).find('i').addClass('s1');
+
             window.onscroll=function () {
                 $('#nav').css({backgroundColor:'#777'});
                 $('#nav .nav_left h3').css({color:'white'});
@@ -328,8 +635,8 @@
                 $('#nav .nav_middle .main_li .line').css({backgroundColor:'#ff9645'});
                 $('#nav .nav_middle .main_li .li_a').css({color:'white'});
                 $('#nav .nav_middle .main_li .li_a i').css({color:'white'});
-                $('#nav .nav_middle .main_li .li_a').eq(5).removeClass('s1').addClass('s2');
-                $('#nav .nav_middle .main_li .li_a').eq(5).find('i').removeClass('s1').addClass('s2');
+                $('#nav .nav_middle .main_li .li_a').eq(0).removeClass('s1').addClass('s2');
+                $('#nav .nav_middle .main_li .li_a').eq(0).find('i').removeClass('s1').addClass('s2');
                 $('#nav .nav_right span').css({color:'#fff',background:'#35baee'});
                 if ($(document).scrollTop()==0){
                     $('#nav').css({backgroundColor:'#fff'});
@@ -339,11 +646,328 @@
                     $('#nav .nav_middle .main_li .li_a').css({color:'black'});
                     $('#nav .nav_middle .main_li .li_a i').css({color:'black'});
                     // $('#nav .nav_right span').css({color:'#0e0e0e',background:'white'});
-                    $('#nav .nav_middle .main_li .li_a').eq(5).removeClass('s2').addClass('s1');
-                    $('#nav .nav_middle .main_li .li_a').eq(5).find('i').removeClass('s2').addClass('s1');
+                    $('#nav .nav_middle .main_li .li_a').eq(0).removeClass('s2').addClass('s1');
+                    $('#nav .nav_middle .main_li .li_a').eq(0).find('i').removeClass('s2').addClass('s1');
                     $('#nav .nav_right span').css({color:'#0e0e0e',background:'white'});
                 }
+
+                // 二级导航 定位
+                var headHeight = $('#card').outerHeight(true) + $('.fishBone').outerHeight(true) - $('.pagetitle').outerHeight(true);
+
+                if($(document).scrollTop() > headHeight){
+                    // 二级菜单 固定定位
+                    var topheight = $('#nav').outerHeight(true) + $('.pagetitle').outerHeight(true);
+                    $('.portrait-2').css({
+                        'position':'fixed',
+                        'top':topheight,
+                        'width':'80%'
+                    })
+                }else {
+                    // 二级菜单 回原来的位置
+                    $('.portrait-2').css({
+                        'position':'absolute',
+                        'top':'0',
+                        'width':'100%'
+                    })
+                }
+                // 二级菜单
+
             };
+
+        $(document).ready(function(){
+            // 锚定导航
+                $('.navi_head a.downSpan').on('click',function(){
+                    // console.log($(this).data('targetel'));
+                    if($(this).hasClass('disabled')){
+                        return false;
+                    }else {
+                        Lscroll($(this).data('targetel'))
+                    }
+
+                })
+            function Lscroll(element){
+                var scroll_offset = $(element).offset();
+
+                var scroll=scroll_offset.top - $('#nav').outerHeight(true) - $('.navi_head').outerHeight(true) - $('.pagetitle').outerHeight(true) - 2;//避免滚动后元素被nav遮挡
+                $("body,html").animate({
+                    scrollTop:scroll
+                },500);
+            }
+
+            // 风险评价 雷达图
+
+                function randarChart() {
+                    $('#inforChart').css('height',$('.inforLeft ').height());//设置高度 同左侧
+
+                    var myChart = echarts.init(document.getElementById('inforChart'));
+                    var option = {
+                        backgroundColor:'transparent',
+                        title : {
+                            text: '风险雷达图',
+                            subtext: '',
+                            // x:'center',
+                            x:'left',
+                            y:'top',
+                            textStyle:{color:'#333'}
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            confine: true,
+                            // formatter: "{b} : {c} "
+                        },
+                        grid: {
+                            left: '4%',
+                            right: '0%',
+                            bottom: '7%',
+                            top:'4%',
+                            // 通过  下面的 center radius 控制大小 位置
+                            containLabel: true
+                        },
+                        legend: {
+                            type: 'scroll',
+                            orient: 'vertical',
+                            left:0,
+                            top:'center',
+                            textStyle: {
+                                fontWeight: 'bolder',
+                                fontSize: 14,
+                                color:'#333'
+                            },
+                            data:['分支机构风险','经营风险','司法风险','高收益风险','违规承诺风险','宣传风险','舆情风险']
+                        },
+                        calculable : true,
+                        radar: {
+                            indicator: [
+                                {text: '分支机构风险', max: 100},
+                                {text: '经营风险', max: 100},
+                                {text: '司法风险', max: 100},
+                                {text: '高收益风险', max: 100},
+                                {text: '违规承诺风险', max: 100},
+                                {text: '宣传风险', max: 100},
+                                {text: '舆情风险', max: 100}
+                            ],
+                            name:{
+                                color:'#333',
+                                fontWeight:800,
+                                // fontSize:10,
+                                formatter: function (value, indicator) {
+                                    return value.substr(0,2) + '\n' + value.substr(2,value.length);
+                                }
+                            },
+                            center : ['50%', '55%'],
+                            radius: 80
+                        },
+                        series: [
+                            {
+                                type: 'radar',
+                                tooltip: {
+                                    trigger: 'item'
+                                },
+                                itemStyle: {
+                                    normal: {areaStyle: {type: 'default'}
+                                    }
+                                },
+                                data: [
+                                    {
+                                        value: [38,40,52,34,14,22,26],
+                                        name: '风险值'
+                                    },
+                                ]
+                            },
+
+                        ]
+                    };
+                    myChart.setOption(option);
+                }
+                randarChart();
+
+            // 风险评价 雷达图
+
+            // 鱼骨图
+                // LL新版
+                var data = [
+                    {'发布时间':'2016-12-20 至 2016-12-20',
+                    '承办庭室':'吕磊'
+                    ,'承办法官':'吕磊',
+                    '承办法院':'吕磊法院',
+                    '案件状态':'吕磊',
+                    '标题':'(XXXX)XXXXXX第吕磊号'},
+                    {'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},{'发布时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号'},{'审理时间': '2016-12-20 至 2016-12-20','承办庭室':'XXXX','承办法官':'XXX','承办法院':'XXXXXXX法院','案件状态':'XX','标题':'(XXXX)XXXXXX第XXXX号(当前案件)'},
+                        {'发布时间':'',
+                        '承办庭室':''
+                        ,'承办法官':'',
+                        '承办法院':'',
+                        '案件状态':'',
+                        '标题':''},
+                    ];
+
+                var testData = [
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "财经报社",
+                        publish_time: "2018-04-26 11:12:49",
+                        title: "央行：依法加强和改进反洗钱监管",
+                        url: "http://www.fx168.com/fx168_t/1804/2504630.shtml",
+                        comment_num: "nan",
+                        content: "人民银行党委委员、行长助理刘国强出席会议并讲话，他指出，要努力构建新时代中国特色社会主义反洗钱工作体系；不断完善反洗钱法律制度，依法加强和改进反洗钱监管；依法做好反洗钱调查协查工作；加强反洗钱国际合作。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+
+
+                    {
+                        retweet_num: "nan",
+                        publisher: "新浪新闻中心",
+                        publish_time: "2018-04-26 11:46:34",
+                        title: "央行：努力做好新时代人民银行反洗钱工作",
+                        url: "http://news.sina.com.cn/c/2018-04-26/doc-ifztkpin4392756.shtml",
+                        comment_num: "nan",
+                        content: "央行网站26日消息，4月24日，人民银行2018年反洗钱工作电视电话会议在北京召开。会议总结了2017年人民银行反洗钱工作，分析了当前反洗钱工作形势，对今后一段时期反洗钱工作进行了全面部署。人民银行党委委员、行长助理刘国强出席会议并讲话。 刘国强要求，要认真贯彻党的十九大精神，努力做好新时代人民银行反洗钱工作。一是全面落实《国务院办公厅关于完善反洗钱、反恐怖融资、反逃税监管体制机制的意见》,努力构建新时代中国特色社会主义反洗钱工作体系；二是坚持风险为本，不断完善反洗钱法律制度,依法加强和改进反洗钱监管，努力提升反洗钱义务机构风险管理水平，充分发挥反洗钱在防范化解金融风险、维护金融稳定方面的作用；三是加强与有关部门的相互协作，依法做好反洗钱调查协查工作，进一步提升反洗钱监测分析水平，有效打击洗钱及相关犯罪，维护国家安全和社会稳定；四是加强反洗钱国际合作，积极做好接受国际互评估工作，深度参与反洗钱国际治理。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                        retweet_num: "nan",
+                        publisher: "和讯网",
+                        publish_time: "2018-04-26 14:46:34",
+                        title: "央行：不断完善法律制度 依法加强和改进反洗钱监管",
+                        url: "http://bank.hexun.com/2018-04-26/192911307.html",
+                        comment_num: "nan",
+                        content: "中新经纬客户端4月26日电 据央行网站26日消息，近日，人民银行2018年反洗钱工作电视电话会议在北京召开。会议总结了2017年人民银行反洗钱工作，分析了当前反洗钱工作形势，对今后一段时期反洗钱工作进行了全面部署。人民银行党委委员、行长助理刘国强出席会议并讲话。 　　刘国强指出，当前反洗钱工作已成为维护国家安全和金融安全的重要保障，是推进国家治理体系和治理能力现代化的有效措施，是参与构建人类命运共同体、促进全球治理体系变革的重要途径，也是实现央行防范和化解金融风险、维护金融稳定的重要手段；要从维护国家安全和金融安全的高度，深刻认识反洗钱工作的重要意义，进一步增强责任感和使命感。 　　刘国强要求，要认真贯彻党的十九大精神，努力做好新时代人民银行反洗钱工作。 　　一是全面落实《国务院办公厅关于完善反洗钱、反恐怖融资、反逃税监管体制机制的意见》，努力构建新时代中国特色社会主义反洗钱工作体系； 　　二是坚持风险为本，不断完善反洗钱法律制度，依法加强和改进反洗钱监管，努力提升反洗钱义务机构风险管理水平，充分发挥反洗钱在防范化解金融风险、维护金融稳定方面的作用； 　　三是加强与有关部门的相互协作，依法做好反洗钱调查协查工作，进一步提升反洗钱监测分析水平，有效打击洗钱及相关犯罪，维护国家安全和社会稳定； 　　四是加强反洗钱国际合作，积极做好接受国际互评估工作，深度参与反洗钱国际治理。(中新经纬APP) ",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+
+                    {
+                        retweet_num: "nan",
+                        publisher: "东方财富网",
+                        publish_time: "2018-04-26 17:46:34",
+                        title: "央行：进一步提升反洗钱检测分析水平",
+                        url: "http://bank.eastmoney.com/news/1175,20180426864171517.html",
+                        comment_num: "nan",
+                        content: "据央行网站4月26日消息，央行2018年反洗钱工作电视电话会议4月24日召开。央行党委委员、行长助理刘国强提出四点要求，包括加强与有关部门的相互协作，依法做好反洗钱调查协查工作，进一步提升反洗钱监测分析水平，有效打击洗钱及相关犯罪，维护国家安全和社会稳定。 　　刘国强指出，当前反洗钱工作已成为维护国家安全和金融安全的重要保障，要从维护国家安全和金融安全的高度，深刻认识反洗钱工作的重要意义。 　　他同时提出，要努力做好新时代人民银行反洗钱工作。 一是全面落实《国务院办公厅关于完善反洗钱、反恐怖融资、反逃税监管体制机制的意见》，努力构建新时代中国特色社会主义反洗钱工作体系；二是坚持风险为本，不断完善反洗钱法律制度，依法加强和改进反洗钱监管，努力提升反洗钱义务机构风险管理水平，充分发挥反洗钱在防范化解金融风险、维护金融稳定方面的作用；三是加强与有关部门的相互协作，依法做好反洗钱调查协查工作，进一步提升反洗钱监测分析水平，有效打击洗钱及相关犯罪，维护国家安全和社会稳定；四是加强反洗钱国际合作，积极做好接受国际互评估工作，深度参与反洗钱国际治理。",
+                        source: "news",
+                        id: "AWNN6WUtvel9p8sC_ate",
+                        fans_num: "nan"
+                    },
+                    {
+                    retweet_num: "nan",
+                    publisher: "腾讯财经",
+                    publish_time: "2018-04-26 9:18:02",
+                    title: "央行：依法加强和改进反洗钱监管",
+                    url: "https://finance.qq.com/a/20180426/021730.htm",
+                    comment_num: "nan",
+                    content: "会议认为，在党中央、国务院正确领导下，人民银行认真履职，奋发有为，在完善反洗钱顶层设计、应对国际互评估、推动特定非金融领域反洗钱制度建设、持续加强反洗钱监管和调查协查、加强反洗钱监测能力建设、参与反洗钱国际治理等方面取得了令人瞩目的成绩。 　　刘国强指出，当前反洗钱工作已成为维护国家安全和金融安全的重要保障，是推进国家治理体系和治理能力现代化的有效措施，是参与构建人类命运共同体、促进全球治理体系变革的重要途径，也是实现央行防范和化解金融风险、维护金融稳定的重要手段；要从维护国家安全和金融安全的高度，深刻认识反洗钱工作的重要意义，进一步增强责任感和使命感。 　　刘国强要求，要认真贯彻党的十九大精神，努力做好新时代人民银行反洗钱工作。一是全面落实《国务院办公厅关于完善反洗钱、反恐怖融资、反逃税监管体制机制的意见》,努力构建新时代中国特色社会主义反洗钱工作体系；二是坚持风险为本，不断完善反洗钱法律制度,依法加强和改进反洗钱监管，努力提升反洗钱义务机构风险管理水平，充分发挥反洗钱在防范化解金融风险、维护金融稳定方面的作用；三是加强与有关部门的相互协作，依法做好反洗钱调查协查工作，进一步提升反洗钱监测分析水平，有效打击洗钱及相关犯罪，维护国家安全和社会稳定；四是加强反洗钱国际合作，积极做好接受国际互评估工作，深度参与反洗钱国际治理。 　　人民银行上海总部，各分行、营业管理部、省会（首府）城市中心支行、副省级城市中心支行、地市中心支行、县支行反洗钱工作负责同志，反洗钱局、反洗钱监测分析中心和有关司局代表参加了会议。（完）",
+                    source: "news",
+                    id: "AWNN6WUtvel9p8sC_ate",
+                    fans_num: "nan"
+                    },
+                ]
+
+                var fishdata = [];
+                for(var i=0;i<testData.length;i++){
+                    fishdata.push({'发布时间':testData[i].publish_time,'标题':testData[i]['title'],'内容':testData[i]['content'],'作者':testData[i].publisher,'ID':testData[i].id,'链接':testData[i].url});
+                }
+                fishdata.push({'发布时间':' ','标题':' ','内容':' ','作者':' ','ID':' ','链接':' '});//添加一条空内容
+                // console.log(fishdata);
+                $(".fishBone").empty();
+                $(".fishBone").fishBone(fishdata);
+
+                $('.fishBone li.item:last').hide();//隐藏那条空数据
+
+                //创建案件历史
+                // $(".fishBone").fishBone(data);
+                // $('.fishBone li.item:last').hide();
+
+        })
+
 
     </script>
     <script src="/static/js/set.js"></script>

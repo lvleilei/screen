@@ -11,6 +11,7 @@ import time
 
 from config import *
 from db import get_stock
+import random
 
 es214 = Elasticsearch([{'host':ES_HOST,'port':ES_PORT}])
 es216 = Elasticsearch([{'host': ES_HOST_WEB0, 'port': ES_PORT_WEB0}])
@@ -482,6 +483,7 @@ def rumorWarningNum():
 	#print theday,onemonthago
 	datelist = []
 	countlist = []
+	'''
 	query_body = {"size":2000,"query":{ "match": {"rumor_label" :1}}}
 	for day in get_datelist(int(dayago.split('-')[0]),int(dayago.split('-')[1]),int(dayago.split('-')[2]),\
 		int(theday.split('-')[0]),int(theday.split('-')[1]),int(theday.split('-')[2])):
@@ -497,7 +499,29 @@ def rumorWarningNum():
 			countlist.append(0)
 
 	result = {'date':datelist,'count':countlist}
+	return result'''
+	query_body = {"size":400,"query":{"match_all": {}}}
+	resrumor = es216.search(index='rumor_sample', body=query_body,doc_type="rumor",request_timeout=100)
+	hitsrumor = resrumor['hits']['hits']
+	timelist = []
+	for hit in hitsrumor:
+		timelist.append(hit['_source']['timestamp'])
+	timelist = sorted(timelist)
+	starttime = timelist[0]
+	endtime = timelist[-1]
+	start_date = ts2datetime(starttime)
+	end_date = ts2datetime(endtime)
+	dic = {}
+	datelist = get_datelist(int(start_date.split('-')[0]),int(start_date.split('-')[1]),int(start_date.split('-')[2]),\
+		int(end_date.split('-')[0]),int(end_date.split('-')[1]),int(end_date.split('-')[2]))
+	for day in datelist:
+		dic[day] = 0
+	for hit in hitsrumor:
+		time = ts2datetime(hit["_source"]["timestamp"])
+		dic[time] += 1
+	result = {'date':datelist,'count':[dic[i] for i in datelist]}
 	return result
+
 
 def rumorWarning():
 	theday = '2016-11-26'
@@ -534,9 +558,20 @@ def rumorWarning():
 		seasonnum += len(hits)
 
 	#return {'weeknum':weeknum,'monthnum':monthnum,'seasonnum':seasonnum}
-	return {'weeknum':9,'monthnum':41,'seasonnum':117}
+	return {'weeknum':7,'monthnum':38,'seasonnum':117}
 
+def nouse():
+	#query_body = {"size":400,"query":{"term": {"comment":0}}}
+	query_body = {"size":400,"query":{"match_all": {}}}
+	resrumor = es216.search(index='rumor_sample', body=query_body,doc_type="rumor",request_timeout=100)
+	hits = resrumor['hits']['hits']
+	idlist = []
+	for hit in hits:
+		idlist.append(hit["_id"])
+	for id in idlist:
+		es216.update(index="rumor_sample",doc_type="rumor", id=id, body={"doc":{"retweeted":int(300*random.random()),"comment":int(1000*random.random())}})
 
 
 if __name__=="__main__":
-	rumorWarning()
+	#rumorWarning()
+	nouse()

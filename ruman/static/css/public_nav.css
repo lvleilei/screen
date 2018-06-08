@@ -31,7 +31,7 @@ body {
     padding: 0.2rem;
     color: #fff;
     top:0;
-    overflow: hidden;
+    /* overflow: hidden; */
     /*background: rgba(8,23,44,0.25);*/
     /*border-bottom: 1px solid rgba(255,255,255,0.1);*/
 }
@@ -58,6 +58,7 @@ body {
     height: 0.02rem;
     background-color:#ffbf1d;
     transition: all linear 0.2s;
+    /* margin-left:0.35rem; */
 }
 /**/
 #nav .nav_left h3 {
@@ -66,7 +67,8 @@ body {
 /*---------*/
 #nav .nav_middle {
     /*width: 55%;*/
-    margin: 0.15rem 0 0 0.1rem;
+    /* margin: 0.15rem 0 0 0.1rem; */
+    margin: 0.15rem 0.5rem 0 0.1rem;
 }
 #nav .nav_middle,#nav .nav_right {
     display: none;
@@ -74,14 +76,17 @@ body {
 #nav .nav_middle .main_li {
     float: left;
     text-align: center;
-    font-size: 0.16rem;
-    margin-left:0.25rem;
+    font-size: 0.26rem;
+    margin-left:0.65rem;
     overflow: hidden;
     padding-bottom: 0.1rem;
+
+    /* height:0.34rem; */
 }
 #nav .nav_middle .main_li .li_a {
     color: white;
     cursor: pointer;
+    /* margin-left:0.35rem; */
 }
 #nav .nav_middle .main_li:hover a,
 #nav .nav_middle .main_li:hover i {

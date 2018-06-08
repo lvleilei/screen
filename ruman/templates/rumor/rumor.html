@@ -76,6 +76,13 @@
             background: #f8f8f8;
             color: #3c3c3c;
         }
+        /* 发布时间列 */
+        #recordingTable thead th:nth-of-type(2) {
+            width:7%;
+        }
+        #spreadRank thead th:nth-of-type(2){
+            width:4%;
+        }
     </style>
 {% endblock %}
 
@@ -108,8 +115,18 @@
                     <dt class="com-6">732</dt>
                 </dl> -->
             </div>
-            <div style="color: white;font-size:0.24rem;position: relative;" class="clearfix">
+            <div style="color: white;font-size:0.24rem;position: relative;" class="clearfix firstTable">
                 <h3 style="float:left;font-weight:700;margin:10px 0;"><i class="icon icon-eye-open"></i>&nbsp;疑似谣言预警</h3>
+                <div class="lieOpt">
+                    <span class="ct-tit">呈现方式：</span>
+                    <select id="">
+                        <option value="7" selected>最近一周</option>
+                        <option value="30">最近一个月</option>
+                        <option value="90">最近三个月</option>
+                        <option value="180">最近半年</option>
+                        <option value="365">最近一年</option>
+                    </select>
+                </div>
                 <div class="searchbox">
                     <!-- <input size="30" type="text" placeholder="请输入查询内容" class="searchWord"/> -->
                     <!--<button type="button" class="btn btn-primary btn-sm moreSitu" title="显示更多筛选条件"><i class="icon icon-plus"></i></button>-->
